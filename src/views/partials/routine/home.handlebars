@@ -1,0 +1,101 @@
+<!--if the single page has the single css file,then use the folling-->
+{{#extend "css"}} 
+<style>
+  .facebook-card .card-header {
+    display: block;
+    padding: 10px;
+  }
+  .facebook-card .facebook-avatar {
+    float: left;
+  }
+  .facebook-card .facebook-name {
+    margin-left: 44px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .facebook-card .facebook-date {
+    margin-left: 44px;
+    font-size: 13px;
+    color: #8e8e93;
+  }
+  .facebook-card .card-footer {
+    background: #fafafa;
+  }
+  .facebook-card .card-footer a {
+    color: #81848b;
+    font-weight: 500;
+  }
+  .facebook-card .card-content img {
+    display: block;
+  }
+  .facebook-card .card-content-inner {
+    padding: 15px 10px;
+  }  
+</style>
+
+{{/extend}}
+
+          <!-- Page, data-page contains page name-->
+          <div class="page toolbar-fixed navbar-fixed"  data-page='home'>
+
+                <!-- Scrollable page content-->
+                <div class="page-content"> <!--infinite-scroll-->
+                
+                
+                    <h1>welcome to the home page</h1>
+                    <li>
+
+                    {{#if user}}
+
+                        <a href="/about">about</a>
+                        <a href="/">home</a>
+                        <a href="/user/fileupload">fileUpload</a>
+                        <a href="/post/make">POST</a>
+
+                        <a href="/user/logout">Logout</a>
+                        <a href="/user/updateUser">{{ user.username }}</a>
+
+                        {{#if user.logo}}
+                            <a href="/user/profile/{{user._id}}" class="personLogo"><img src="/upload/logo/{{user._id}}/{{user.logo}}" ></a>
+                        {{else}}
+                            <a href="/user/profile/{{user._id}}" class="personLogo"><img src="/img/logo.jpg"></a>
+                        {{/if}}
+
+                        {{else}}
+                            <a href="/about">about</a>
+                            <a href="/">home</a>
+                            <a href="/user/fileupload">fileUpload</a>
+                            <a href="/user/login">login</a>
+                            <a href="/user/signup">Signup</a>
+                            <a href="" class="personLogo"><img src="/img/logo.jpg"></a>
+
+                        {{/if}}
+
+                    </li>
+
+
+
+                    <span>
+                        <form action="/post/search" method="GET">
+                        <input type="text" name="keyword" placeholder="SEARCH" class="search" />
+                        <input type="submit" value="submit">
+                        </form>
+                    </span>
+                    <!--<p>Your fortune of the day: </p>
+                    <blockquote>{{fortune}}</blockquote>-->
+                    <br>
+
+                    <h2>ALL THE POSTS</h2>
+
+                    {{> post/postsLoop}}
+
+                    {{> general/message}}
+                </div>
+                <!-- end of Scrollable page content-->
+
+                <!-- Additional "tabbar-scrollable" class -->
+                 {{> general/tabbar}}
+                <!--end of navbar--> 
+
+
+          </div>

@@ -1,28 +1,43 @@
                         {{#if posts}}
                             {{#each posts}}
-                                <li>
-                                
-                                    <p>{{ title }}</p>
-                                    <p class="info" style="font-size:0.5em;line-height:0.1em;">
-                                    Author：<a href="/user/profile/{{user_id}}">{{ postAuthor.local.username }}</a> | 
-                                    Time：{{ created_at }} |
-                                    Tags:
-                                    {{#each tags}}
-                                    <span style="display:inline-block;border:1px solid grey;line-height:1em"><a href="/post/tag/{{_id}}">{{name}}</a></span>
-                                    {{/each}}                                    
 
-                                     {{#if ../isMyPosts}}
-                                    | 
+                                <div class="card facebook-card">
+                                <div class="card-header">
+                                    <div class="facebook-avatar"><img src="http://pic.qiantucdn.com/58pic/11/12/19/32Q58PICph3.jpg!/fw/780/watermark/url/L3dhdGVybWFyay12MS4zLnBuZw==/align/center" width="34" height="34"></div>
+                                    <!--/upload/logo/{{user._id}}/{{user.logo}}  <a href="/user/profile/{{user_id}}">-->
+                                    <div class="facebook-name">{{ postAuthor.local.username }}</div>
+                                    <div class="facebook-date">{{ created_at }}</div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-content-inner">
+                                    <p><a href="/post/show/{{title}}">{{ intro }}</a></p>
+                                    <img src="http://pic.qiantucdn.com/58pic/11/12/19/32Q58PICph3.jpg!/fw/780/watermark/url/L3dhdGVybWFyay12MS4zLnBuZw==/align/center" width="100%">
+                                    <p>
+                                        {{#each tags}}
+                                            <span style="display:inline-block;border:1px solid grey;line-height:1em"><a href="/post/tag/{{_id}}">{{name}}</a></span>
+                                        {{/each}}  
+                                    </p>
+                                    <p class="color-gray">Likes: 112    Comments: 43</p>
+                                    <p> 
+                                        {{#if ../isMyPosts}}
                                         <span><a class="edit" href="/post/edit/{{ _id }}">编辑</a></span>
                                         <span><a class="edit" href="/post/delete/{{ _id }}">删除</a></span>
-                                     {{/if}}
+                                        {{/if}}
                                     </p>
-                              
-                                    <p><a href="/post/show/{{title}}">{{ intro }}</a></p>
-                                </li>
+
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="#" class="link">Like</a>
+                                    <a href="#" class="link">Comment</a>
+                                    <a href="#" class="link">Share</a>
+                                </div>
+                                </div>
+
+
                             {{/each}}
 
-                            {{> post/paging }}
-                        {{/if}}
+                        {{> post/paging }}
+                    {{/if}}
 
 

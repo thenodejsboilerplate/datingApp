@@ -10,7 +10,7 @@ const logger = require('./logger')
 //     process.exit(0)
 //   }
 // })
-mongoose.connect(`mongodb://${mongodb.options.user}:${mongodb.options.pass}@localhost:${mongodb.port}/group`, function (err) {
+mongoose.connect(`mongodb://${mongodb.options.user}:${mongodb.options.pass}@localhost:${mongodb.port}/fastdata`, function (err) {
   if (err) {
     logger.error(`Mongoose default connection error: ${err.stack}`)
     process.exit(0)

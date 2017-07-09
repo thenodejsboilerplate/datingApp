@@ -2,17 +2,24 @@
 {{#extend "css"}}
     <link rel="stylesheet" href="/css/example.css">
 {{/extend}}
-<h1>welcome to the home page</h1>
-<span>
-    <form action="/post/search" method="GET">
-    <input type="text" name="keyword" placeholder="SEARCH" class="search" />
-    <input type="submit" value="submit">
-    </form>
-</span>
-<!--<p>Your fortune of the day: </p>
-<blockquote>{{fortune}}</blockquote>-->
-<br>
 
-<h2>ALL THE POSTS</h2>
 
-    {{> post/postsLoop}}
+
+    <!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+      <!-- Your first view, it is also a .tab and should have "active" class to make it visible by default-->
+      <div class="view view-main">
+        <!-- Pages-->
+        <div class="pages">
+         {{> routine/home}}
+        </div>
+      </div>
+    </div>
+
+    {{#extend "js"}}
+    {{/extend}}
+
+
+
+

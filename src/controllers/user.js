@@ -308,7 +308,7 @@ module.exports = {
 
 
 		 //    });
-		postSignup: passport=>{
+		postSignup: passport => {
 
 		     return function(req, res, next) {
 				  passport.authenticate('local-signup', (err, user, info)=> {
@@ -333,7 +333,6 @@ module.exports = {
 												);
 												req.flash('success','You login successfully and welcome to your dashboard!');
 												return res.redirect('/user/profile/'+ user._id);
-
 										});
 								}
 
