@@ -7,6 +7,9 @@ const mongoose = require('mongoose'),
      // logger = require('./logger'),
   Schema = mongoose.Schema;
 
+const Expat = require('./Expat');
+const Upload = require('./Upload');
+
 // create a schema
 // The allowed SchemaTypes are:
 // String
@@ -18,6 +21,15 @@ const mongoose = require('mongoose'),
 // ObjectId
 // Array
 var userSchema = new Schema({
+  expat: {
+    type: Schema.Types.ObjectId,
+    ref:'Expat',        
+  },
+  upload: {
+    type: Schema.Types.ObjectId,
+    ref:'Upload', 
+  },
+
   local: {
       username: { type: String, required: true, unique: true },
       email: { type: String, required: true, unique: true,min: 4 },
@@ -30,6 +42,9 @@ var userSchema = new Schema({
       resetPasswordExpires: Date,
       roles:[String],
       admin: {Boolean: Boolean, default: false},
+      dueMill: { type: String, default: 0},
+      coin: {type: Number, default: 0},
+      tag: [String],
       //location: String,
       meta: {
         age: Number
@@ -131,7 +146,7 @@ userSchema.methods.generateHash = password => {
 // in arrow-functions , the 'this'' value of the following statement is : window; // or the global object
 // as to arrow function inside a function,  it's the this of the outer function
 // arrow function expressions are best suited for non-method functions.
-userSchema.methods.validPassword = password => {
+userSchema.methods.validPassword = function(password){
   return bcrypt.compareSync(password, this.local.password);
 };
 
@@ -140,6 +155,55 @@ userSchema.methods.time = time => {
 };
 
 userSchema.methods.processUser = user => {
+    /**process the roles */
+    let roles = user.local.roles;
+    let latestRole;
+    let vip = false;
+
+    if(helper.inArray(roles,'Super')){
+        latestRole = 'Super Admin';
+    }else if(helper.inArray(roles,'Junior')){
+        latestRole = 'Junior Admin';
+    }else if(helper.inArray(roles,'Junior Yearly')){
+        latestRole = 'Junior Yearly';
+    }else if(helper.inArray(roles,'Senior Yearly')){
+        latestRole = 'Senior Yearly';
+    }else if(helper.inArray(roles,'Trial')){
+        latestRole = 'Trial';
+    }else{
+        latestRole = 'Nope';
+    }
+
+    if(latestRole!=='Nope'){
+        vip = true;
+    } 
+    
+
+
+   /*** process the dueTimeLeftDay**/
+   let dueTimeLeftDay = 0;
+    if(user.local.dueMill){
+        
+        let dueMill = user.local.dueMill;
+        let dueT = new Date(dueMill);
+        
+        // let dueYear = dueT.getFullYear();
+        // let dueMonth = dueT.getMonth();
+        // let dueDay = dueT.getDay();
+
+        let leftSec = dueMill - Date.now();
+        
+        if(leftSec >= 0){
+            dueTimeLeftDay = Math.ceil(leftSec/(24*60*60*1000));
+        }else{
+            dueTimeLeftDay = 0;
+        }
+    }
+
+
+
+
+
   return {
         _id: user._id,
         username: user.local.username,
@@ -147,7 +211,11 @@ userSchema.methods.processUser = user => {
         logo: user.local.logo,
         roles: user.local.roles,
         admin: user.local.admin,
-        active: user.local.active,      
+        active: user.local.active,   
+        vip: vip,
+        latestRole: latestRole, 
+        coin: user.local.coin,
+        tag: user.local.tag,
         created_at: moment(user.local.created_at).format('L'),
         updated_at: moment(user.local.updated_at).format('L')
 

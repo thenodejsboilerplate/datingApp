@@ -1,0 +1,59 @@
+   {{> general/message}}
+<div class="login-screen">
+    <div class="view">
+      <div class="page">
+        <div class="page-content login-screen-content">
+          <div class="login-screen-title">Log In</div>
+          <form method="POST" action="/user/postLogin">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="list-block">
+              <ul>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Email</div>
+                    <div class="item-input">
+                      <input type="email" name="email" placeholder="Your email">
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Password</div>
+                    <div class="item-input">
+                      <input type="password" name="password" placeholder="Your password">
+                    </div>
+                  </div>
+                </li>
+
+                <input type="submit" id="asubmit" style="visibility: hidden">
+              </ul>
+            </div>
+            <div class="list-block">
+              <ul>
+                <li><a href="#" class="item-link list-button authBtn">Log In</a></li>
+              </ul>
+              <div class="list-block-label">
+                <p>No account? <a class="external" href="/user/signup">Sign Up</a></p>
+                <p><a href="#" class="close-login-screen">Close</a></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {{#extend 'js'}}
+   <script>
+     (function(){
+       var form = document.getElementsByTagName('form')[0];
+       // var submit = document.getElementById('asubmit')[0];
+       var link = document.getElementsByClassName('authBtn')[0];
+       link.onclick = function(){
+         form.submit();
+         return false
+       }
+     }())
+   </script>
+  {{/extend}}

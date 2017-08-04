@@ -1,6 +1,11 @@
-var element = document.createElement('div')
-element.innerHTML = "Welcome to Frank Lee's boilerplate demo!"
-document.body.appendChild(element)
-// import {Instance} from './common/Instance'
-// let instance = new Instance()
-// instance.say()
+// (function(){
+//     // Initialize app
+//     var myApp = new Framework7();
+
+//     // If we need to use custom DOM library, let's save it to $$ variable:
+//     var $$ = Dom7;
+
+//     // Add view
+//     var mainView = myApp.addView('.view-main', {
+//     });    
+// }())   

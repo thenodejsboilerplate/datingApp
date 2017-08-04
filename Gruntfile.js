@@ -84,7 +84,7 @@ module.exports = function (grunt) {
 
       css: {
         files: ['<%= paths.scss %>/**/*.scss'],
-        tasks: ['sass', 'hashres']
+        tasks: ['sass', 'cssmin', 'hashres']
       },
 
       js: {
@@ -96,7 +96,6 @@ module.exports = function (grunt) {
   })// end of grunt.initConfig
 
     // regiter task
-    // grunt.registerTask('watch',['watch']);
   grunt.registerTask('default', ['sass', 'cssmin', 'uglify:dist', 'hashres'])
   grunt.registerTask('static', ['sass', 'cssmin', 'uglify:dist', 'hashres'])
 }

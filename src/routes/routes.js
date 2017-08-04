@@ -5,7 +5,7 @@ const user = require('./frontend/user'),
 	  respond = require('./frontend/respond'),
 	  login3 = require('./frontend/login3'),
 	  index = require('./frontend/index'),
-	  // api = require('./frontend/api'),
+	  expat = require('./frontend/expat'),
 	  post = require('./frontend/post');
 
 // const User = require('../models/User');
@@ -18,7 +18,7 @@ module.exports   = function(app, passport, User) {
 	 // app.use('/api',api);
 	 app.use('/auth',login3);
      app.use('/post', post);
-	 // app.use('/test',test);
+	 app.use('/expat',expat);
 
 		//to get form data using req.body
 		/*****form part end********/

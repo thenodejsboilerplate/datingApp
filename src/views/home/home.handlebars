@@ -1,23 +1,217 @@
 <!--if the single page has the single css file,then use the folling-->
 {{#extend "css"}}
-    <link rel="stylesheet" href="/css/example.css">
+<style>
+  body {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  overflow: scroll;
+}
+a:hover{
+
+}
+/***禁止复制、选中文本***/
+
+Element {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+   user-select: none;
+}
+
+
+.authBtn{
+  display: inline-block;
+  border: 1px solid black;
+  margin:0 2rem;
+  margin-top: 2rem;
+}
+</style>
 {{/extend}}
 
 
 
     <!-- Views, and they are tabs-->
     <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
-    <div class="views">
+    <div class="views  tabs toolbar-through">
       <!-- Your first view, it is also a .tab and should have "active" class to make it visible by default-->
-      <div class="view view-main">
+      <div class="view view-main tab active">
         <!-- Pages-->
         <div class="pages">
          {{> routine/home}}
         </div>
       </div>
-    </div>
+    </div> 
 
-    {{#extend "js"}}
+     <script>
+       var query = query || null
+       var choiceCity,fromCountry
+     </script>   
+  {{#if query.choiceCity}}
+     <script>
+       choiceCity = "{{query.choiceCity}}"
+       //alert(choiceCity+ fromCountry)
+     </script>
+
+  {{/if}}
+
+  {{#if query.fromCountry}}
+     <script>
+       fromCountry = "{{query.fromCountry}}"
+       //alert(choiceCity+ fromCountry)
+     </script>
+
+  {{/if}}
+
+
+
+
+
+
+   {{#extend "js"}}
+  <script>
+    (function(){
+        //var base = 'http://expat.trver.com';
+        var base = 'http://localhost:8080';
+      
+        var myApp = new Framework7({
+            pushState: true,
+            init: true, //false, //Disable App's automatic initialization
+            onPageInit: function (app, page) {
+                if (page.name === 'home') {
+                    var $$ = Dom7;
+                   // var searchbar = $$('.searchbar')[0];
+
+                $$('.open-filter').on('click', function () {
+                  myApp.popup('.popup-filter');
+                });
+                var form = document.getElementsByClassName('filterForm')[0];
+                // var submit = document.getElementById('asubmit')[0];
+                var link = document.getElementsByClassName('authBtnHome')[0];
+                link.onclick = function(){
+                  form.submit();
+                  return false
+                }
+
+                    // make the posts infinite scroll
+
+                    // Max items to load
+                    var maxItems = 6;
+                    
+                    function fillPage(url, param){
+                        $$.get(url, param, function(data){
+                          var expats = JSON.parse(data).expats;
+                          if(expats.length === 0) {
+                            document.querySelector('.resultContent ul.expatsList').innerHTML =  '<p style="background-color: transparent;">No data found!</p>';
+                            return
+                          }
+                          maxItems = JSON.parse(data).allExpatsCount;
+                        
+                         
+                          expats.forEach(function(v){
+                            //alert('v'+ JSON.stringify(v))
+
+                              var post ='<li><a href="/expat?id=' + v._id  + '"'+' class="item-link item-content external"><div class="item-media"><img src=' + 'http://img1.imgtn.bdimg.com/it/u=4287063257,3622016934&fm=214&gp=0.jpg' + ' width="80"></div>' + '<div class="item-inner"><div class="item-title-row"><div class="item-title">'+ v.name +'</div><div class="item-after"><i class="f7-icons yen">money_yen_fill</i>' + (v.charge ? v.charge : 0) +'</div></div><div class="item-subtitle">'+ v.fromCountry + ', '+ v.fromState +' - '+ v.updated_at +'</div><div class="item-text">'+ v.experience +'</div></div></a></li>';
+
+                              document.querySelector('.resultContent ul.expatsList').innerHTML = document.querySelector('.resultContent ul.expatsList').innerHTML + post;
+                              //document.querySelector('.resultContent ul.expatsList').insertAdjacentHTML('afterBegin',post);
+                          })
+
+                          if(expats.length < 5) {
+                            $$('.infinite-scroll-preloader').remove();
+                          }
+
+
+                        })
+                    }
+
+
+
+                    // Loading flag
+                    var loading = false;
+
+                    // Append items per load
+                    var itemsPerLoad = 6;
+
+                    maxItems = 6;
+
+
+                    var page = 1;
+                    var url = base + '/expatsData';
+
+                    var param  =  {
+                      p: page,
+                      fromCountry: fromCountry || null,
+                      choiceCity: choiceCity || null
+                    };     
+                    //query = query ? JSON.parse(query) : query
+                    //alert(`query ${JSON.stringify(query)}`)               
+
+                    console.log('param'+ JSON.stringify(param))
+
+                    
+                    var lastIndex;
+                    fillPage(url, param);
+                    // Attach 'infinite' event handler
+                    $$('.infinite-scroll').on('infinite', function () {
+                      // Last loaded index
+                      lastIndex = $$('.resultContent>ul.expatsList>li').length;
+                      // Exit, if loading in progress
+                      if (loading) return;
+                    
+                      // Set loading flag
+                      loading = true;
+                      // Emulate 1s loading
+                      setTimeout(function () {
+                        // Reset loading flag
+                        loading = false;
+                    
+                        if (lastIndex >= maxItems) {
+                          // Nothing more to load, detach infinite scroll events to prevent unnecessary loadings
+                          myApp.detachInfiniteScroll($$('.infinite-scroll'));
+                          // Remove preloader
+                          $$('.infinite-scroll-preloader').remove();
+                          document.querySelector('.resultContent ul.expatsList').insertAdjacentHTML('afterEnd','<p style="color: #e3e3e3;text-align:center;font-size: 1rem">NO Expats...</p>');
+                          return;
+                        }
+                    
+                        // Generate new items HTML
+                        var html = '';
+
+                        var page = 1;
+                        var url = base + '/expatsData';
+
+                        page = lastIndex/6 + 1;
+                        // alert('page'+page)
+                        param.p = page
+                      
+                        fillPage(url, param);
+                    
+                        // Update last loaded index
+                        lastIndex = $$('.resultContent>ul.expatsList>li').length;
+                      }, 1000);
+                    });  
+                    //end of infinite scroll
+
+                }//end of if home
+            },
+            hideToolbarOnPageScroll: true,
+           // 'hide-toolbar-on-scroll': true,
+            // ... other parameters
+        });
+       // (function(){
+
+      //  }());
+        var mainView = myApp.addView('.view-main', {
+          
+          // name: true,
+          //dynamicNavbar: true
+        })     
+
+
+    }())
+
+ 
+  </script>  
     {{/extend}}
 
 

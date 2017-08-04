@@ -1,6 +1,10 @@
 'use strict';
 const fs = require('fs');
 var logger = require('./logger');
+const validator = require('validator'),
+    xss = require('xss'), 
+    bodyParser   = require('body-parser'),
+    im = require('gm').subClass({imageMagick: true});
 module.exports = {
 
  /**
@@ -59,6 +63,7 @@ module.exports = {
       return v === ele;
     });
   },
+  
   getTime: (time = '') => {
     let date;
     if (time === '') {
@@ -107,6 +112,84 @@ module.exports = {
       }
     });
   },
+
+
+  /**
+   * deal with image upload
+   * @param {Object} photo
+   */
+  processImg: (photo,photoDir,sizeLimit, files,req, res) => {
+
+        const size = photo.size,
+                path = photo.path;
+       logger.debug(`file in formiable: ${JSON.stringify(files)}`);
+        if(validator.isEmpty(photo.name)){
+                logger.error('the photo uploaded in expatUpload is emtpy or the photo name not existing');
+                req.flash('error','The image uploaded is empty!');
+                return res.redirect('back');
+        }
+            //1TB = 1024GB = 1024*1024MB = 1024*1024*1024KB = 1024*1024*1024*1024Byte = 1024*1024*1024*8 bit
+            if(size > sizeLimit){//1mb
+                fs.unlink(path, function() {	   //fs.unlink 删除用户上传的文件
+                    logger.debug('file is more than 5 mb and be deleted.Please upload smaller one');
+                    req.flash('error',"file over 5MB");
+                    return res.redirect('back');
+                });                                   
+            }else if(photo.type.split('/')[0] != 'image'){
+                logger.debug('file is not a valid image file');
+                req.flash('error',"file not valid");
+                res.redirect('back');                                 
+            }
+            
+            // let thedir = photoDir;
+            //prevent uploading file with the same name                                   
+            const photoName = Date.now() + validator.trim(xss(photo.name)); 
+
+            if(photo === files.id){
+                files.id.name = photoName;
+            }else if(photo === files.studentCard){
+                files.studentCard.name = photoName;
+            }    
+
+            files.personal.forEach(function(vv){
+              if(vv.name === photo.name) {
+                  vv.name =  photoName;
+              }
+            })                  
+
+
+// else if(photo === files.personal){
+//                 files.personal.forEach(function(v){
+//                    v.name = photoName;   
+//                 })
+                
+//             }   
+
+
+
+            const fullPath = photoDir + photoName;
+
+            function dealWithImg(w,h){
+                im(path)
+                .resize(w,h,'!')
+                .autoOrient()
+                .write(fullPath,function(err){
+                    if (err) {
+                            logger.error('imageMagic write error: '+ err); 
+                            //callback(err); 
+                            throw new Error('imageMAGIC ERROR');
+                    }
+                    logger.debug('The file has been re-named to: ' + fullPath);
+                    fs.unlink(path, function() {	   //fs.unlink 删除用户上传的文件
+                        logger.debug('file is removed after renaming it');
+                    }); 
+                });                                          
+            }
+
+            dealWithImg(500,500);
+  },
+
+
 
     /**
      * slugify the url to make it  more beautiful

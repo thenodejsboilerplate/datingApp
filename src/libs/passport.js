@@ -133,6 +133,7 @@ module.exports = function (passport) {
                 // if the user is found but the password is wrong
 
             if (!user.validPassword(password)) {
+              console.log('password not matching..')
               return done(null, false, req.flash('error', '密码错误')); // create the loginMessage and save it to session as flashdata
             }
 

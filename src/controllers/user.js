@@ -9,9 +9,11 @@ const flash        = require('connect-flash'),
     path = require('path'),
     fs = require('fs'),
 	utils = require('../libs/utility'),
-	Post = require('../models/Post'),
+	Expat = require('../models/Expat'),
 	User = require('../models/User'),
-	postProxy = require('../db_proxy/post');
+	Complaint = require('../models/Complaint'),
+	logger = require('../libs/logger'),
+	coHandle = require('../common/coHandler');
 
 module.exports = {
 
@@ -331,8 +333,20 @@ module.exports = {
 														}
 
 												);
-												req.flash('success','You login successfully and welcome to your dashboard!');
-												return res.redirect('/user/profile/'+ user._id);
+
+												coHandle(function *(){
+													const count = yield User.count({}).exec();
+													let tag = count + 1;
+													user.local.tag.push(tag);
+													yield user.save();
+
+													req.flash('success','Login successfully!');
+													//return res.redirect('/user/profile/'+ user._id);
+													return res.redirect('/');
+
+												})
+
+
 										});
 								}
 
@@ -350,14 +364,15 @@ module.exports = {
 		        	passport.authenticate('local-login', (err, user, info)=>{
 						    if (err) { return next(err); }
 						    if (!user) { 
-						    	req.flash('error','Something wrong with the Password or email!')
+						    	req.flash('error','Wrong password or email!')
 						    	return res.redirect('/user/login'); 
 						    }
 						    req.logIn(user, function(err) {
 						    	if (err) { return next(err); }
 						    	
-						    	req.flash('success','Login successfully!')
-						    	return res.redirect('/user/profile/'+user._id);
+						    	req.flash('success','Welcome on board!')
+						    	return res.redirect('/');
+								///user/profile/'+user._id
 		 
 						    });        		
 				    })(req, res, next);
@@ -487,6 +502,52 @@ module.exports = {
 		       };
 
 		},
+
+		pay: function(req, res){
+
+			const user = req.user ? req.user.processUser(req.user) : req.user
+			logger.debug('user:' + JSON.stringify(user))
+			const coin = user.coin;
+
+			const expat_id = req.query.expat_id;
+			coHandle(function * (){
+				 
+				let expat = yield Expat.findOne({_id: expat_id}).populate('account').exec();
+				logger.debug('expat: '+ JSON.stringify(expat))
+				let charge = expat.charge;
+				
+				if(coin >= charge) {
+					req.user.local.coin = coin - charge;
+					yield req.user.save();
+					console.log('user.coin' + req.user.local.coin)
+					res.json({result: `You\'ve still got ${req.user.local.coin}`})
+				}else{
+					console.log('user.coin' + req.user.local.coin)
+					res.json({result: 'Don\'t have enough point!'});
+				}
+			})
+
+		},
+
+		complaint: function (req, res){
+			coHandle(function*(){
+				const body = req.body;
+				const user = req.user ? req.user.processUser(req.user) : req.user;
+				const expat_id = body.expat_id;
+				if(expat_id){
+					let complaint = new Complaint({
+						whoComplain: user._id,
+						beingComplained: body.expat_id,
+						fraud: body.fraud,
+						falseInfo: body.falseInfo,
+						complaint: body.complaint
+					});
+					yield complaint.save();
+					return res.redirect('back');
+
+				}
+			})
+		}
 
 
 

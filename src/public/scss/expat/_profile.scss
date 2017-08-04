@@ -1,0 +1,83 @@
+.expatProfile{
+    max-width:100%;
+    .mainColor{
+        color: $mainColor;
+    }
+    p.boxText{
+    @include ellipsis(100%);
+    }
+
+    .second-header{
+        background-color: white;
+        &>p.tip{
+            color: #e3e3e3;
+            font-size: 0.5rem;
+            margin: 0.4rem 0.6rem;
+        }
+    }
+    .smallBox{
+      margin:0.5%;
+      margin-top: 1%;
+      padding: 0.5rem 0;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+    .tagVerfy{
+      display: inline-block;
+      width:49%;
+    }
+
+    .tagVerfy>div, .requirement>div{
+      display:inline-block;
+      margin: 0 0.2rem;
+      
+    }
+
+    .tagVerfy>div p, .requirement>div p{
+      font-size: 1rem;
+      margin:0
+    }
+    .tagVerfy .tag i, .requirement .tag i{
+      font-size: 2.6rem
+    }
+
+    .smallBox.requirement{
+      width: 100%;
+      max-width:100%;
+    }
+
+    .leftIcon{
+       width: 26%;
+      
+    }
+    .rightContent{
+        width: 64%;
+
+    }
+    .leftIcon100{
+        width: 12%;
+    }
+    .rightContent100{
+        width: 80%; 
+    }
+
+    .ecurrency{
+        width: 100%;
+        p{
+            width:100%;
+            text-align: center;
+        }
+    }
+
+    .recom{
+        
+        @include radius('12px');
+        text-align: center;
+        p{
+            margin: 0 auto;
+            width: 50%;
+            
+        }
+    }
+
+}

@@ -1,101 +1,92 @@
 <!--if the single page has the single css file,then use the folling-->
 {{#extend "css"}} 
 <style>
-  .facebook-card .card-header {
-    display: block;
-    padding: 10px;
+  .navbar>.navbar-inner>.left{
+    color: rgba(239, 68, 80, 1);
   }
-  .facebook-card .facebook-avatar {
-    float: left;
+  .second-header{
+    margin-bottom: 1rem;
+    background-color: #f7f7f8;
+    padding:0 1rem;
   }
-  .facebook-card .facebook-name {
-    margin-left: 44px;
-    font-size: 14px;
-    font-weight: 500;
+  .second-header .col-70 p>i{
+    font-size: 1rem;
+    color: rgba(239, 68, 80, 1);
   }
-  .facebook-card .facebook-date {
-    margin-left: 44px;
-    font-size: 13px;
-    color: #8e8e93;
-  }
-  .facebook-card .card-footer {
-    background: #fafafa;
-  }
-  .facebook-card .card-footer a {
-    color: #81848b;
-    font-weight: 500;
-  }
-  .facebook-card .card-content img {
-    display: block;
-  }
-  .facebook-card .card-content-inner {
-    padding: 15px 10px;
+  .second-header .col-30 p>i{
+    font-size: 1rem;
+
   }  
+  .second-header .col-70>p,.second-header .col-30>p{
+    margin:0.8rem 0;
+  }
+
+
+  .authBtn{
+    display: inline-block;
+    border: 1px solid black;
+    margin:0 2rem
+
+  }
+
+  i.yen{
+    font-size: 0.8rem;
+  }
 </style>
 
 {{/extend}}
 
           <!-- Page, data-page contains page name-->
           <div class="page toolbar-fixed navbar-fixed"  data-page='home'>
-
+              <div class="navbar">
+                  <div class="navbar-inner">
+                      <div class="left"></div>
+                      <div class="center">Uncle's English</div>
+                      <div class="right"><i class="f7-icons">add</i></div>
+                  </div>
+              </div>
                 <!-- Scrollable page content-->
-                <div class="page-content"> <!--infinite-scroll-->
-                
-                
-                    <h1>welcome to the home page</h1>
-                    <li>
+                <div class="page-content infinite-scroll" data-distance="100"><!--infinite-scroll-->
+                 
+                  <div class="row second-header">
+                      <!-- Each "cell" has col-[widht in percents] class -->
+                      <div class="col-70">
+                        <p><i class="f7-icons">list</i> <span> &nbsp老外列表</span></p>
+                      </div>
+                      <div class="col-30"><p style="text-align: right"><a href="#" class="open-filter">筛选</a> &nbsp<i class="f7-icons">right</i></p></div>
+                  </div> 
 
-                    {{#if user}}
+                 {{!--{{> post/postsLoop}}--}}
+                    <div class="list-block media-list resultContent">
+                    <ul class="expatsList">
+                    </ul>
+                    </div>
+                    <!-- Preloader -->
+                    <div class="infinite-scroll-preloader">
+                        <div class="preloader"></div>
+                    </div>
+                      
 
-                        <a href="/about">about</a>
-                        <a href="/">home</a>
-                        <a href="/user/fileupload">fileUpload</a>
-                        <a href="/post/make">POST</a>
-
-                        <a href="/user/logout">Logout</a>
-                        <a href="/user/updateUser">{{ user.username }}</a>
-
-                        {{#if user.logo}}
-                            <a href="/user/profile/{{user._id}}" class="personLogo"><img src="/upload/logo/{{user._id}}/{{user.logo}}" ></a>
-                        {{else}}
-                            <a href="/user/profile/{{user._id}}" class="personLogo"><img src="/img/logo.jpg"></a>
-                        {{/if}}
-
-                        {{else}}
-                            <a href="/about">about</a>
-                            <a href="/">home</a>
-                            <a href="/user/fileupload">fileUpload</a>
-                            <a href="/user/login">login</a>
-                            <a href="/user/signup">Signup</a>
-                            <a href="" class="personLogo"><img src="/img/logo.jpg"></a>
-
-                        {{/if}}
-
-                    </li>
-
-
-
-                    <span>
-                        <form action="/post/search" method="GET">
-                        <input type="text" name="keyword" placeholder="SEARCH" class="search" />
-                        <input type="submit" value="submit">
-                        </form>
-                    </span>
-                    <!--<p>Your fortune of the day: </p>
-                    <blockquote>{{fortune}}</blockquote>-->
-                    <br>
-
-                    <h2>ALL THE POSTS</h2>
-
-                    {{> post/postsLoop}}
-
-                    {{> general/message}}
                 </div>
                 <!-- end of Scrollable page content-->
-
                 <!-- Additional "tabbar-scrollable" class -->
                  {{> general/tabbar}}
                 <!--end of navbar--> 
 
 
           </div>
+
+        {{> modals/login}}
+
+
+
+
+
+
+
+      {{> modals/filter}}
+
+
+
+
+

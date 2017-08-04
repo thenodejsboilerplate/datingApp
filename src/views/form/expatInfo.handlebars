@@ -1,0 +1,376 @@
+{{#extend 'css'}}
+ <style>
+  .authBtn{
+    display: inline-block;
+    border: 1px solid black;
+    margin:0 2rem
+  }
+  .tip{
+    text-align: center;
+    color: red;
+  }
+ </style>
+{{/extend}}
+
+    <div class="views"> 
+    <div class="view view-profile">
+      <div class="page">
+        <div class="page-content login-screen-content">
+          <div class="login-screen-title">Expat Info</div>
+
+         {{#if expat}}
+          <p class="tip"> You've posted at {{expat.created_at}}; <a href="/" class="external">Back</a></p>
+         {{/if}}
+
+          <form class="contactform" method="POST"  action="/expat/expatInfo">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="list-block">
+              <ul>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Full Name</div>
+                    <div class="item-input">
+                      <input type="text" name="name" placeholder="Full name">
+                    </div>
+                  </div>
+                </li>
+              
+                <li>
+                  <a href="#" class="item-link smart-select" data-open-in="popup">
+                    <!-- select -->
+                    <select  name="gender">
+                      <option value="" selected>Choose</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                    </select>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <!-- Select label -->
+                        <div class="item-title">Gender</div>
+                        <!-- Selected value, not required -->
+                        {{!--<div class="item-after">Apple</div>--}}
+                      </div>
+                    </div>
+                  </a>                  
+                </li>
+
+
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Come from</div>
+                    <div class="item-input">
+                      <select id="fromCountry" name="fromCountry" class="form-control" style="width:49%;display:inline-block;"></select>    
+                       <select name="fromState" id="fromState" class="form-control" style="width:49%;display:inline-block;"></select> 
+                    </div>
+                  </div>
+                </li>
+
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Now in</div>
+                    <div class="item-input">
+                       {{!--<select id="choiceCountry" name="choiceCountry" class="form-control" style="width:49%;display:inline-block;"></select>--}}
+                       <select id="choiceState"  name="choiceState" class="form-control" style="width:49%;display:inline-block;"></select> 
+                       <select id="choiceCity"  name="choiceCity" class="form-control" style="width:49%;display:inline-block;"></select>   
+
+                      <span calss="error"></span>
+                    </div>
+                  </div>
+                </li>
+
+
+                {{!--<li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Location</div>
+                    <div class="item-input">
+                       <input type="text" required="required" data-allowed="/.+/" aria-required="true" name="choiceDetail" placeholder="near Wensan Road,Xihu District,Hangzhou..."> 
+                      <span calss="error"></span>
+                    </div>
+                  </div>
+                </li>--}}
+
+                 <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Phone</div>
+                    <div class="item-input">
+                      <input type="text" required="required" aria-required="true" value="" name="phone" placeholder="Phone number"> 
+                      <span calss="error"></span>
+                    </div>
+                  </div>
+                </li>
+
+                 <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Wechat</div>
+                    <div class="item-input">
+                      <input type="text" required="required" aria-required="true" value="" name="wechat" placeholder="Wechat Account"> 
+                      <span calss="error"></span>
+                    </div>
+                  </div>
+                </li>
+
+                <li>
+
+                  <a href="#" class="item-link smart-select" data-open-in="popup">
+                    <!-- select -->
+                    <select  name="nativeLanguage">
+                      <option value="English" selected>English</option>
+                      <option value="French">French</option>
+                      <option value="German">German</option>
+                      <option value="Spanish">Spanish</option>
+                      <option value="Japanese">Japanese</option>
+                      <option value="Chinese">Chinese</option>
+                    </select>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <!-- Select label -->
+                        <div class="item-title">Native Language</div>
+                        <!-- Selected value, not required -->
+                        {{!--<div class="item-after">Apple</div>--}}
+                      </div>
+                    </div>
+                  </a>                  
+
+                    {{!--</div>
+                  </div>--}}
+                </li>
+
+                <li>
+                    <a href="#" class="item-link smart-select" data-open-in="popup">
+                            <!-- "multiple" attribute for multiple select-->
+                            <select multiple name="secondaryLanguage">
+                              <option value="English">English</option>
+                              <option value="French" selected>French</option>
+                              <option value="German">German</option>
+                              <option value="Spanish">Spanish</option>
+                              <option value="Japanese">Japanese</option>
+                              <option value="Chinese">Chinese</option>
+                            </select>
+                            <span calss="error"></span>
+                            <div class="item-content">
+                              <div class="item-inner">
+                                <div class="item-title">Secondary Language</div>
+                              </div>
+                            </div>
+                    </a>
+                </li>
+
+
+
+                <li>
+                    <a href="#" class="item-link smart-select" data-open-in="popup">
+                            <!-- "multiple" attribute for multiple select-->
+                            <select multiple name="hangout">
+                              <option value="Male">Male</option>
+                              <option value="Female" selected>Female</option>
+                              <option value="Speaking Chinese">Speaking Chinese</option>
+                              <option value="Speaking English">Speaking English</option>
+                              <option value="Open-minded">Open-minded</option>
+                              <option value="Same City">Same City</option>
+                              <option value="Any City">Any City</option>
+                              <option value="Anyone">Anyone</option>
+                            </select>
+                            <span calss="error"></span>
+                            <div class="item-content">
+                              <div class="item-inner">
+                                <div class="item-title">Will Hang out With</div>
+                              </div>
+                            </div>
+                    </a>
+                </li>
+
+
+
+
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Experience <br >&& Yourself</div>
+                    <div class="item-input">
+                        <textarea required name="experience" placeholder="Education && teaching experience etc"></textarea>
+                    </div>
+                  </div>
+                </li>
+
+
+
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Meetup Fee</div>
+                    <div class="item-input">
+                      <input type="number" name="charge" placeholder="0-400">
+                    </div>
+                  </div>
+                </li>
+
+                <input type="submit" id="asubmit" style="visibility: hidden">
+              </ul>
+            </div>
+            <div class="list-block">
+              <ul>
+                <li><a href="#" class="item-link list-button authBtn">Submit</a></li>
+              </ul>
+              <div class="list-block-label">
+                {{!--<p>Already have an account? <a class="external" href="/user/login">Log In</a></p>--}}
+                <p><a href="#" class="close-login-screen">&copy 2017</a></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+</div>
+  {{#extend 'js'}}
+   <script>
+     (function(){
+
+var myApp = new Framework7();
+
+       var form = document.getElementsByTagName('form')[0];
+       // var submit = document.getElementById('asubmit')[0];
+       var link = document.getElementsByClassName('authBtn')[0];
+       link.onclick = function(){
+         form.submit();
+         return false
+       }
+
+
+      var inputs = document.getElementsByTagName('input');
+       var invalid = Array.prototype.some.call(inputs, function(v){
+           return v.classList.contains('invalid');
+       });
+
+
+      if(invalid){
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+            return;
+        });
+      }
+      
+      function addEvent(element, event, callback){
+        var previousEventCallBack = element['on'+event];
+        element['on'+event] = function(e){
+          var output = callback(e);
+          if(output === false) {
+            e.preventDefault();
+            return false
+            };
+
+          if(typeof previousEventCallBack === 'function'){
+            output = previousEventCallBack(e);
+            if(output === false) {
+              e.preventDefault();
+              return false;
+            }
+          }
+        }
+      }
+
+      Array.prototype.forEach.call(inputs, function(ip){
+        var error = document.getElementById('bkerror');
+        if(ip.getAttribute('data-allowed')){
+        var data_allowed_exp = ip.getAttribute('data-allowed');
+        var flags = data_allowed_exp.replace(/.*\/([gimy]*)$/, '$1');
+        var pattern = data_allowed_exp.replace(new RegExp('^/(.*?)/'+flags+'$'), '$1');
+        var regex = new RegExp(pattern, flags);
+        
+        }else{
+         var regex = /.+/;
+        }
+
+        if(ip.nextSibling.className &&  ip.nextSibling.className==='error'){
+           error = ip.nextSibling;
+        }
+
+        ///<--addEvent(window, 'load', function(){
+          ///var test = ip.value.length !== 0 || regex.test(ip.value);
+          //if(test){
+            //ip.className = 'valid';
+            //error.innerHMTL = '';
+            //error.className = 'error';
+          //}else{
+            //ip.className = 'invalid';
+          //}
+        //});
+
+        addEvent(ip, 'keyup', function(){
+          var test = ip.value.length !== 0 || regex.test(ip.value);
+          if(test){
+            ip.className = 'valid';
+            error.innerHMTL = '';
+            error.className = 'error';
+          }else{
+            ip.className = 'invalid';
+          }
+        });        
+
+        addEvent('form','submit', function(){
+          var test = ip.value.length !== 0 || regex.test(ip.value);
+
+          if(test){
+            ip.className = 'valid';
+            error.innerHMTL = '';
+            error.className = 'error';     
+         
+          }else{
+            ip.className = 'invalid';
+            error.innerHMTL = 'I expect a ' + ip.name + 'value';
+            error.className = 'error active';
+            return false;//some legacy browsers not suuporting event.preventDefault() method            
+          }
+          
+        });
+      });
+
+
+
+
+
+     }())
+   </script>
+  {{/extend}}
+
+{{!--<form method="post" action="/post/post">
+  <label>
+  
+  Title：<br />
+  <input type="text" name="title" placeholder="title"/>
+  </label><br />
+
+   <label>
+  Tags：<br />
+  <input type="text" name="tags" placeholder="use ',' to seperate between tags"/>
+  </label> <br />
+
+   <label>
+  Category：<br />
+  <select name="category">
+    <option selected>Category 1</option>
+    <option>Category 2</option>
+    <option>Category 3</option>
+    <option>Category 4</option>
+  </select>
+  </label> <br />
+
+   <label>
+  Introduction：<br />
+  <input type="text" name="intro" placeholder="The introduction about the post, less than 200 words!"/>
+  </label> <br />
+
+
+  <label>
+  Content：<br />
+  <textarea name="content" rows="20" cols="100" placeholder="Content" id="editor"></textarea><br />
+  </label>
+   
+  <input type="submit" value="POST" />
+</form>
+
+{{#extend "js"}}
+	<script src="/ckeditor/ckeditor.js"></script>
+	<script src="/js/editor/editor.js"></script>    
+  <script>
+	initSample();
+  </script>
+{{/extend}}--}}

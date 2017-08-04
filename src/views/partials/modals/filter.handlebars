@@ -1,0 +1,149 @@
+  {{#extend 'css'}}
+    <style>
+    .list-block ul:before {
+      background-color: transparent
+    }  
+    .list-block ul:after {
+      background-color: transparent
+    }      
+    </style>
+  {{/extend}} 
+   
+          <!-- filter page -->
+          <div class="popup popup-filter">
+            <div class="page-content">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="left">
+                            <a href="#" class="back close-popup"><i class="f7-icons">left</i>
+                        </div>
+                        <div class="center">Filter</div>
+                        <div class="right">
+                            <a href="#" class="link authBtnHome">Go</a>
+                        </div>
+                    </div>
+                </div>  
+
+
+
+                <div>
+                  <form class="filterForm" method="POST"  action="/filter">
+                      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                      <div class="list-block">
+                        <ul>
+
+                          {{!--<li>
+                            <a href="#" class="item-link smart-select" data-open-in="popup">
+                              <!-- select -->
+                              <select  name="gender">
+                                <option value="" selected>Choose</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                              </select>
+                              <div class="item-content">
+                                <div class="item-inner">
+                                  <!-- Select label -->
+                                  <div class="item-title">Gender</div>
+                                  <!-- Selected value, not required -->
+                                  
+                                </div>
+                              </div>
+                            </a>                  
+                          </li>--}}
+
+
+                          <li class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">Come from</div>
+                              <div class="item-input">
+                                <select id="fromCountry" name="fromCountry" class="form-control" style="width:49%;display:inline-block;"></select>    
+                                {{!--<select name="fromState" id="fromState" class="form-control" style="width:49%;display:inline-block;"></select> --}}
+                              </div>
+                            </div>
+                          </li>
+
+                          <li class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">Now in</div>
+                              <div class="item-input">
+                              
+                                <select id="choiceState"  name="choiceState" class="form-control" style="width:49%;display:inline-block;"></select> 
+                                <select id="choiceCity"  name="choiceCity" class="form-control" style="width:49%;display:inline-block;"></select>   
+
+                                <span calss="error"></span>
+                              </div>
+                            </div>
+                          </li>
+
+
+                          {{!--<li>
+                            <a href="#" class="item-link smart-select" data-open-in="popup">
+                              <!-- select -->
+                              <select  name="nativeLanguage">
+                                <option value="English" selected>English</option>
+                                <option value="French">French</option>
+                                <option value="German">German</option>
+                                <option value="Spanish">Spanish</option>
+                                <option value="Japanese">Japanese</option>
+                                <option value="Chinese">Chinese</option>
+                              </select>
+                              <div class="item-content">
+                                <div class="item-inner">
+                                  <!-- Select label -->
+                                  <div class="item-title">Native Language</div>
+                                  <!-- Selected value, not required -->
+                                 
+                                </div>
+                              </div>
+                            </a>                  
+                          </li>
+
+                          <li>
+                              <a href="#" class="item-link smart-select" data-open-in="popup">
+                                      <!-- "multiple" attribute for multiple select-->
+                                      <select multiple name="secondaryLanguage">
+                                        <option value="English">English</option>
+                                        <option value="French" selected>French</option>
+                                        <option value="German">German</option>
+                                        <option value="Spanish">Spanish</option>
+                                        <option value="Japanese">Japanese</option>
+                                        <option value="Chinese">Chinese</option>
+                                      </select>
+                                      <span calss="error"></span>
+                                      <div class="item-content">
+                                        <div class="item-inner">
+                                          <div class="item-title">Secondary Language</div>
+                                        </div>
+                                      </div>
+                              </a>
+                          </li>--}}
+
+                          <input type="submit" id="asubmit" style="visibility: hidden">
+                        </ul>
+                      </div>
+             
+         
+
+               
+                    </form>
+                </div>   
+            </div>
+          </div>
+
+
+  {{#extend 'js'}}
+   <script>
+     (function(){
+       var form = document.getElementsByClassName('filterForm')[0];
+       console.log('from '+ JSON.stringify(form))
+       // var submit = document.getElementById('asubmit')[0];
+       var link = document.getElementsByClassName('authBtnHome')[0];
+       link.onclick = function(e){
+         e.preventDefault();
+
+         form.submit();
+         return false
+       }
+     }())
+   </script>
+  {{/extend}}

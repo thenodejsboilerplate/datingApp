@@ -6,6 +6,8 @@ const main = require('../../controllers/main');
 
 /* GET home page. */
 router.get('/', main.home);
-router.get('/about', main.about);
+router.post('/filter', main.filter)
+router.get('/expatsData', main.expatsData)
+//router.get('/about', main.about);
 
 module.exports = router;

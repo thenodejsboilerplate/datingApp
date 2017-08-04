@@ -1,0 +1,182 @@
+
+{{#extend 'css'}}
+ <style>
+  .authBtn{
+    display: inline-block;
+    border: 1px solid black;
+    margin:0 2rem
+  }
+  .tip{
+    text-align: center;
+    color: red;
+  }     
+ </style>
+{{/extend}}
+
+    <div class="views"> 
+    <div class="view view-profile">
+      <div class="page">
+        <div class="page-content login-screen-content">
+          <div class="login-screen-title">Verify Your Existence <br> <span>Optional</span></div>
+
+          <form method="POST" enctype="multipart/form-data"  action="/expat/expatUpload">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="list-block">
+              <ul>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Your Life Picture</div>
+                    <div class="item-input">
+                      <input type="file" required="required" multiple accept="image/*"  aria-required="true" value="" name="personal">
+                    </div>
+                  </div>
+                </li>
+    
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Visa/Id</div>
+                    <div class="item-input">
+                    <input type="file" required="required" accept="image/*" aria-required="true" value="" name="id">
+                    </div>
+                  </div>
+                </li>
+
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Student Card</div>
+                    <div class="item-input">
+                    <input type="file" required="required"  accept="image/*" aria-required="true" value="" name="studentCard">
+                    </div>
+                  </div>
+                </li>
+
+                <input type="submit" id="asubmit" style="visibility: hidden">
+              </ul>
+            </div>
+            <div class="list-block">
+              <ul>
+                <li><a href="#" class="item-link list-button authBtn">Submit</a></li>
+              </ul>
+              <div class="list-block-label">
+                {{!--<p>Already have an account? <a class="external" href="/user/login">Log In</a></p>--}}
+                <p>We suggest you upload it if you wanna Build Trust with a blind date or a foreigner etc. Any way, they don't know if you exist or not.And your life picture will be shown in your profile.  GO TO <a href="/" class="external">Home Page</a> if not</p>
+                <p>
+                <p><a href="#" class="close-login-screen">&copy 2017</a></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+</div>
+  {{#extend 'js'}}
+   <script>
+     (function(){
+
+var myApp = new Framework7();
+
+       var form = document.getElementsByTagName('form')[0];
+       // var submit = document.getElementById('asubmit')[0];
+       var link = document.getElementsByClassName('authBtn')[0];
+       link.onclick = function(){
+         form.submit();
+         return false
+       }
+
+
+      var inputs = document.getElementsByTagName('input');
+       var invalid = Array.prototype.some.call(inputs, function(v){
+           return v.classList.contains('invalid');
+       });
+
+
+      if(invalid){
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+            return;
+        });
+      }
+      
+      function addEvent(element, event, callback){
+        var previousEventCallBack = element['on'+event];
+        element['on'+event] = function(e){
+          var output = callback(e);
+          if(output === false) {
+            e.preventDefault();
+            return false
+            };
+
+          if(typeof previousEventCallBack === 'function'){
+            output = previousEventCallBack(e);
+            if(output === false) {
+              e.preventDefault();
+              return false;
+            }
+          }
+        }
+      }
+
+      Array.prototype.forEach.call(inputs, function(ip){
+        var error = document.getElementById('bkerror');
+        if(ip.getAttribute('data-allowed')){
+        var data_allowed_exp = ip.getAttribute('data-allowed');
+        var flags = data_allowed_exp.replace(/.*\/([gimy]*)$/, '$1');
+        var pattern = data_allowed_exp.replace(new RegExp('^/(.*?)/'+flags+'$'), '$1');
+        var regex = new RegExp(pattern, flags);
+        
+        }else{
+         var regex = /.+/;
+        }
+
+        if(ip.nextSibling.className &&  ip.nextSibling.className==='error'){
+           error = ip.nextSibling;
+        }
+
+        ///<--addEvent(window, 'load', function(){
+          ///var test = ip.value.length !== 0 || regex.test(ip.value);
+          //if(test){
+            //ip.className = 'valid';
+            //error.innerHMTL = '';
+            //error.className = 'error';
+          //}else{
+            //ip.className = 'invalid';
+          //}
+        //});
+
+        addEvent(ip, 'keyup', function(){
+          var test = ip.value.length !== 0 || regex.test(ip.value);
+          if(test){
+            ip.className = 'valid';
+            error.innerHMTL = '';
+            error.className = 'error';
+          }else{
+            ip.className = 'invalid';
+          }
+        });        
+
+        addEvent('form','submit', function(){
+          var test = ip.value.length !== 0 || regex.test(ip.value);
+
+          if(test){
+            ip.className = 'valid';
+            error.innerHMTL = '';
+            error.className = 'error';     
+         
+          }else{
+            ip.className = 'invalid';
+            error.innerHMTL = 'I expect a ' + ip.name + 'value';
+            error.className = 'error active';
+            return false;//some legacy browsers not suuporting event.preventDefault() method            
+          }
+          
+        });
+      });
+
+
+
+
+
+     }())
+   </script>
+  {{/extend}}

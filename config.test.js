@@ -23,9 +23,6 @@ var config = {
   // debug 为 true 时，用于本地调试
   debug: true,
   env: 'product',
-  yearlyCharge: 588,
-  trialCharge: 99,
-  contractVipYear: 8, // month long
   host: hostname,
 
   uploadDir: path.join(appDir, 'src/public/upload/'),
@@ -58,10 +55,10 @@ var config = {
   auth_cookie_name: 'node_site',
 
   // 程序运行的端口
-  port: process.env.PORT || 8000,
+  port: process.env.PORT || 8080,
 
   // 话题列表显示的话题数量
-  list_topic_count: 3,
+  TOPIC_COUNT: 5,
 
   // 邮箱配置
   mail_opts: {

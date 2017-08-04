@@ -1,0 +1,479 @@
+{{#extend 'css'}}
+<style>
+.swiper-slide {
+  background: #fff;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+}
+.swiper-slide span{
+  text-align:center;
+  display:block;
+  width:100%;
+  height:100%;
+
+}
+.swiper-slide span img{
+  text-align:center;
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.swiper-container {
+  height: 120px;
+  margin: 10px 0;
+
+}
+
+.photo-browser .swiper-container{
+  height:100%;
+}
+
+.mainColor{
+  color: #ef4450
+}
+
+
+
+.authBtn{
+  display: inline-block;
+  border: 1px solid black;
+  margin:0 2rem;
+  margin-top: 2rem;
+}
+
+</style>
+{{/extend}}
+<!-- That is all we have in about.html file -->
+ {{#if expat}}
+
+          <!-- Page, data-page contains page name-->
+          <div class="page expatProfile"  data-page='profile'>
+              <div class="navbar">
+                  <div class="navbar-inner">
+                      <div class="left"><a href="/" class="back external"><i class="f7-icons">left</i></a></div>
+                 
+                      <div class="center"># UID0017{{expat.id}}</div>
+                      <div class="right"><a href="#" class="open-illegal">举报</a></div>
+                  </div>
+              </div>
+                <!-- Scrollable page content-->
+                <div class="page-content" data-distance="100"><!--infinite-scroll-->
+                 
+                  <div class="row second-header">
+                      <!-- Each "cell" has col-[widht in percents] class -->
+                        <p class="tip">{{expat.choiceCity}}, {{expat.choiceState}}</p>
+                      
+                  </div> 
+
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                          
+                      {{#if upload}}
+
+                            {{#if upload.personal}}
+                              {{#each upload.personal}}
+                              <div class="swiper-slide personal"><span><img src="/upload/expat/{{this}}">{{this.name}}</span></div>
+                              {{/each}}
+                            {{/if}}
+
+                        {{else}}
+                          <div class="swiper-slide"><span><img src="/img/noImg.png">{{expat.name}}</span></div>
+                        {{/if}}
+
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Each "cell" has col-[widht in percents] class -->
+                        <div class="tagVerfy smallBox">
+                          <div class="tag leftIcon"><i class="f7-icons mainColor">card_fill</i></div><!--
+                          --><div class="rightContent">
+                            <p class="mainColor">老外编号</p>
+                            <p class="boxText">UID0017{{expat.id}}</p>
+                          </div>
+                        </div><!--
+
+                        --><div class="tagVerfy smallBox">
+                          
+
+                          
+                          <div class="tag leftIcon">
+                          {{#if upload.id}}
+                            <i class="f7-icons mainColor">check_round_fill</i>
+                          </div><!--
+                       --><div class="rightContent">
+                            <p class="mainColor">已验证</p>
+                            <p class="boxText"><a href="#" class="pb-standalone-video" style="color:#fc0">已验证护照身份</a></p>
+                          </div>
+                          {{else}}
+                             {{#if upload.studentCard}}
+                                <i class="f7-icons mainColor">check_round_fill</i>
+                              </div><!--
+                          --><div class="rightContent">
+                                <p class="mainColor">已验证</p>
+                                <p class="boxText"><a href="#" class="pb-standalone-video" style="color:#fc0">已验证护照身份</a></p>
+                              </div>
+                            {{else}}
+                                <i class="f7-icons mainColor">close_round_fill</i>
+                              </div><!--
+                          --><div class="rightContent">
+                                <p class="mainColor">未验证</p>
+                                <p class="boxText"><a href="#" class="pb-standalone-video" style="color:#fc0">未验证护照身份</a></p>
+                              </div>
+                             {{/if}}
+
+                          {{/if}}
+
+                        
+
+                         
+                        </div>
+
+                        {{!--<div class="col-50">50%</div>--}}
+                    </div>  
+
+                    <div class="row">
+                        <!-- Each "cell" has col-[widht in percents] class -->
+                        <div class="tagVerfy smallBox">
+                          <div class="tag leftIcon"><i class="f7-icons mainColor">compass</i></div><!--
+                         --><div class="rightContent">
+                            <p class="mainColor">国籍</p>
+                            <p class="boxText">{{expat.fromCountry}}</p>
+                          </div>
+                        </div><!--
+
+                        --><div class="tagVerfy smallBox">
+                          <div class="tag leftIcon"><i class="f7-icons mainColor">at</i></div><!--
+
+                         --><div class="rightContent">
+                            <p class="mainColor">服务地区</p>
+                            <p class="boxText">{{expat.choiceCity}} , {{expat.choiceState}}</p>
+                          </div>
+                        </div>
+
+                        {{!--<div class="col-50">50%</div>--}}
+                    </div>  
+
+                    <div class="row">
+                        <div class="requirement smallBox">
+                          <div class="tag leftIcon100"><i class="f7-icons mainColor">persons</i></div><!--
+                         --><div class="rightContent100">
+                            <p class="mainColor">交友要求</p>
+                            <p class="boxText">{{expat.hangout}}</p>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                      <p class="smallBox" style="padding: 1rem;width:100%"><span class="mainColor">Experience/Others</span> <br/>{{expat.experience}}</p>
+
+                    </div>
+
+                    <div class="row ecurrency">
+                      <p  class="smallBox">所需Dogecoin: {{expat.charge}}</p>
+                    </div>
+
+                    <div class="row recom">
+                      {{!--<p class="smallBox"><span>+ </span>求推荐<p>--}}
+                      <p style="margin:0 auto;width:50%;margin-top:2rem">
+                        {{#if user}}
+
+                        {{!--open-contact--}}
+                        <a href="#" class="button button-fill button-big color-yellow payAction" ><span style="color: rgba(239, 68, 80, 1);"><i class="f7-icons mainColor" style="font-size:1rem">add</i> &nbsp</span>求推荐</a>
+                        {{else}}
+                        <a href="/user/login" class="button button-fill button-big color-yellow external" ><span style="color: rgba(239, 68, 80, 1);"><i class="f7-icons mainColor" style="font-size:1rem">add</i> &nbsp</span>求推荐</a>
+                        {{/if}}
+                     </p> 
+                    </div>
+
+<div>
+
+</div>
+
+
+
+                </div>
+                <!-- end of Scrollable page content-->
+
+
+          </div><!--.page-->
+
+{{#if user}}
+  {{#if user.vip}}
+    {{#if coinNotEnough}}
+      <!-- About Popup -->
+    <div class="popup popup-contact">
+      <div class="content-block">
+        <p style="text-align:center"><i class="f7-icons mainColor close-popup" style="font-size:5rem;">close</i></p>
+        <h1 id="coinInfo"></h1>
+        <p><span class="mainColor">Name</span>: Not Enough Coin/您的币已不足支付</p>
+        <p><span class="mainColor">Wechat</span>: Not Enough Coin/您的币已不足支付</p>
+        <p><span class="mainColor">Phone</span>: Not Enough Coin/您的币已不足支付</p>
+      </div>
+    </div>
+
+    {{else}}
+    <!-- About Popup -->
+    <div class="popup popup-contact">
+      <div class="content-block">
+        <p style="text-align:center"><i class="f7-icons mainColor close-popup" style="font-size:5rem;">close</i></p>
+        <h1 id="coinInfo"></h1>
+        <p><span class="mainColor">Name</span>: {{expat.name}}</p>
+        <p><span class="mainColor">Wechat</span>: {{expat.wechat}}</p>
+        <p><span class="mainColor">Phone</span>: {{expat.phone}}</p>
+      </div>
+    </div>
+
+    {{/if}}
+  {{else}}
+    <!-- About Popup -->
+  <div class="popup popup-contact">
+    <div class="content-block">
+      <p style="text-align:center"><i class="f7-icons mainColor close-popup" style="font-size:5rem;">close</i></p>
+      <h1 id="coinInfo"></h1>
+      <p><span class="mainColor">Name</span>: VIP用户可见</p>
+      <p><span class="mainColor">Wechat</span>: VIP用户可见</p>
+      <p><span class="mainColor">Phone</span>: VIP用户可见</p>
+    </div>
+  </div>
+  {{/if}}
+{{/if}}
+
+<script>
+  var chargeNeeded = "{{expat.charge}}";
+  var expat_id = "{{expat._id}}";
+  var id,studentCard,personal = null;
+  
+</script>
+
+          {{#if upload}}
+              <script>
+                  personal = "{{upload.personal}}" || null;
+                  id = "{{upload.id}}" || null;
+                  studentCard = '{{upload.studentCard}}' || null;
+              </script>
+          {{/if}}
+
+{{else}}
+ <p>No data!</p>
+{{/if}}
+
+
+
+
+
+
+
+<div class="popup popup-charge">
+  <div class="content-block">
+    <p style="text-align:center"><i class="f7-icons mainColor close-popup" style="font-size:5rem;">close</i></p>
+    <p><span class="mainColor">Charge Info</p>
+    <p><span class="mainColor">Wechat</span>: 13395810472</p>
+    <p><span class="mainColor">QQ</span>: 2847972882</p>
+  </div>
+</div>
+
+
+
+
+
+<div class="popup popup-illegal">
+    <p style="text-align:center"><i class="f7-icons mainColor close-popup" style="font-size:5rem;">close</i></p>  
+{{!--<div class="content-block-title">Choose one</div>--}}
+<div class="list-block">
+  <form method="POST"  action="/user/complaint">
+  <ul>
+    <li>
+      <label class="label-checkbox item-content">
+        <!-- Checked by default -->
+        <input type="checkbox" name="falseInfo" value="False Information" checked="checked">
+        <div class="item-media">
+          <i class="icon icon-form-checkbox"></i>
+        </div>
+        <div class="item-inner">
+          <div class="item-title">False Information</div>
+        </div>
+      </label>
+    </li>
+    <!-- Another chekbox item -->
+    <li>
+      <label class="label-checkbox item-content">
+        <input type="checkbox" name="fraud" value="Fraud">
+        <div class="item-media">
+          <i class="icon icon-form-checkbox"></i>
+        </div>
+        <div class="item-inner">
+          <div class="item-title">A fraud</div>
+        </div>
+      </label>
+    </li>
+    <li class="align-top">
+      <div class="item-content">
+          <textarea placeholder="Your complaint..." name="complaint"></textarea>
+      </div>
+    </li>
+    {{#if expat}}
+    <input type="text" value="{{expat._id}}" name="expat_id" style="visibility: hidden">
+    {{/if}}
+    <input type="submit" id="asubmit" style="visibility: hidden">
+    
+  </ul>
+   
+  <a href="#" class="item-link list-button authBtn">Submit</a>
+
+
+  </form>
+</div>
+</div>
+
+
+
+
+
+{{#extend 'js'}}
+ <script>
+    (function(){
+
+       var form = document.getElementsByTagName('form')[0];
+       // var submit = document.getElementById('asubmit')[0];
+       var link = document.getElementsByClassName('authBtn')[0];
+       link.onclick = function(){
+         form.submit();
+         return false
+       }
+
+
+       var myApp = new Framework7({
+       });
+
+        // Slow speed
+        var $$ = Dom7;
+
+        $$('.open-contact').on('click', function () {
+          myApp.popup('.popup-contact');
+        });
+        
+        $$('.open-services').on('click', function () {
+          myApp.popup('.popup-services');
+        });   
+
+        $$('.open-illegal').on('click', function () {
+          myApp.popup('.popup-illegal');
+        });          
+
+      // Init slider and store its instance in mySwiper variable
+      var mySwiper = myApp.swiper('.swiper-container', {
+        pagination:'.swiper-pagination'
+      });
+
+
+
+      /*=== With Video ===*/
+      //{
+        //  html: '<iframe src="//www.youtube.com/embed/lmc21V-zBq0?list=PLpj0FBQgLGEr3mtZ5BTwtmSwF1dkPrPRM" frameborder="0" allowfullscreen></iframe>',
+          //caption: 'Woodkid - Run Boy Run (Official HD Video)'
+      //},
+      var base = '/upload/expat/';
+      if(id && studentCard){
+        var myPhotoBrowserPopupDark = myApp.photoBrowser({
+            photos : [
+                {
+                    url: base + id,
+                    caption: 'Identification'
+                },
+                {
+                    url: base + studentCard,
+                    caption: 'Student Verified'
+                },
+            ],
+            theme: 'dark',
+            type: 'standalone'
+        });
+      }
+      else if(id && studentCard){
+        
+      }
+      else if(studentCard){
+        var myPhotoBrowserPopupDark = myApp.photoBrowser({
+            photos : [
+                {
+                    url: base + studentCard,
+                    caption: 'Student Verified'
+                },
+            ],
+            theme: 'dark',
+            type: 'standalone'
+        });  
+      }else if(id){
+        var myPhotoBrowserPopupDark = myApp.photoBrowser({
+            photos : [
+                {
+                    url: base + id,
+                    caption: 'Identification'
+                },
+            ],
+            theme: 'dark',
+            type: 'standalone'
+        });  
+      }
+
+
+      $$('.pb-standalone-video').on('click', function () {
+          myPhotoBrowserPopupDark.open();
+      });
+
+
+
+
+
+      //- Two groups, action sheet
+      $$('.payAction').on('click', function () {
+          var target = this;
+          var buttons1 = [
+              {
+                  text: chargeNeeded + ' Dogecoin',
+                  label: true
+              },
+              {
+                  text: 'Pay Now',
+                  bold: true,
+                  onClick: function(){
+                    $$.get('/user/pay', {expat_id: expat_id}, function (data) {
+                      data = JSON.parse(data);
+                      var coinInfo = document.getElementById('coinInfo');
+                      coinInfo.innerHTML = data.result;
+                      myApp.popup('.popup-contact');
+
+                    });
+                   
+                  }
+              },
+              {
+                  text: 'Charge',
+                  bold: true,
+                  onClick: function(){
+                      myApp.popup('.popup-charge');
+                  }
+              }
+          ];
+          var buttons2 = [
+              {
+                  text: 'Cancel',
+                  color: 'red'
+              }
+          ];
+          var groups = [buttons1, buttons2];
+          myApp.actions(groups);
+
+      });
+ 
+
+
+
+    }())
+
+ </script>
+{{/extend}}

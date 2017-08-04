@@ -10,27 +10,30 @@ module.exports = (handle) => {
             .catch((err) => {
               logger.debug('into error handler');
               logger.error(`
-                req: ${req},
+                
                 err: ${err},
+                stack: ${err.stack}
                 `
               );
+
+              //req: ${req},
               // if(err.constructor.name === 'MessageError') {
               //   res.json({
               //     Code: -20000,
               //     Message: err.message
               //   });
               // }
-              if(env ==='test' || env === 'develop'){
-                res.json({
-                  Code: -1000,
-                  Message: err.stack
-                });
-              } else if(env === 'production') {
-                res.json({
-                  Code: -1000,
-                  Message: '操作失败 '
-                });
-              }
+              // if(env ==='test' || env === 'develop'){
+              //   res.json({
+              //     Code: -1000,
+              //     Message: err.stack
+              //   });
+              // } else if(env === 'production') {
+              //   res.json({
+              //     Code: -1000,
+              //     Message: '操作失败 '
+              //   });
+              // }
             });
 
 };

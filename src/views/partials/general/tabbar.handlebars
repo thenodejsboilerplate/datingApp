@@ -1,14 +1,23 @@
       <div class="toolbar tabbar tabbar-labels">
         <div class="toolbar-inner">
             <a href="/search" class="tab-link active"> 
-                <i class="f7-icons">search</i><span class="tabbar-label">Search</span>
+                <i class="f7-icons">search</i><span class="tabbar-label">寻觅</span>
             </a>
-            <a href="/job/myJobs" class="tab-link">
-                <i class="f7-icons">briefcase</i><span class="tabbar-label">My jobs</span>
+            {{#if user}}
+            <a href="/expat/expatInfo" class="tab-link">
+                <i class="f7-icons" style="font-size: 2.8rem;">add_round_fill</i><span class="tabbar-label"></span>
             </a>
+            {{else}}
+            <a href="#" class="tab-link open-login-screen">
+                <i class="f7-icons" style="font-size: 2.8rem;">add_round_fill</i><span class="tabbar-label"></span>
+            </a>
+            {{/if}}
             {{!--<a href="/resume" class="tab-link">
                 <i class="f7-icons">document_text</i><span class="tabbar-label">Resume</span>
             </a>--}}
-            <a href="/job/more" class="tab-link"> <i class="f7-icons">more</i><span class="tabbar-label">More</span></a>
+            <a href="/job/more" class="tab-link"> <i class="f7-icons">settings</i><span class="tabbar-label">More</span></a>
        </div>
+
+       
       </div>
+    

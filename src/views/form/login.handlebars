@@ -1,4 +1,4 @@
-<h1>LOGIN</h1>
+{{!--<h1>LOGIN</h1>
 <h3><a href="/auth/google">Sign In with Google</a></h3>
 <h3><a href="/auth/github">Sign In with Github</a></h3>
 
@@ -18,4 +18,86 @@
     <hr>
 
     <p>Need an account? <a href="/user/signup">signup</a></p>
-    <p>Or go <a href="/user/forgotPassword">Forget your Password</a>.</p>
+    <p>Or go <a href="/user/forgotPassword">Forget your Password</a>.</p>--}}
+
+
+    {{!--<!-- Views, and they are tabs-->
+    <!-- We need to set "toolbar-through" class on it to keep space for our tab bar-->
+    <div class="views">
+      <!-- Your first view, it is also a .tab and should have "active" class to make it visible by default-->
+      <div class="view view-main">
+        <!-- Pages-->
+        <div class="pages">
+         {{> routine/home}}
+        </div>
+      </div>
+    </div>--}}
+{{#extend 'css'}}
+ <style>
+  .authBtn{
+    display: inline-block;
+    border: 1px solid black;
+    margin:0 2rem
+
+  }
+
+ </style>
+{{/extend}}
+
+    <div class="views"> 
+    <div class="view">
+      <div class="page">
+        <div class="page-content login-screen-content">
+          <div class="login-screen-title">Log In</div>
+          <form method="POST" action="/user/postLogin">
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <div class="list-block">
+              <ul>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Email</div>
+                    <div class="item-input">
+                      <input type="email" name="email" placeholder="Your email">
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content">
+                  <div class="item-inner">
+                    <div class="item-title label">Password</div>
+                    <div class="item-input">
+                      <input type="password" name="password" placeholder="Your password">
+                    </div>
+                  </div>
+                </li>
+
+                <input type="submit" id="asubmit" style="visibility: hidden">
+              </ul>
+            </div>
+            <div class="list-block">
+              <ul>
+                <li><a href="#" class="item-link list-button authBtn">Log In</a></li>
+              </ul>
+              <div class="list-block-label">
+                <p>No account? <a class="external" href="/user/signup">Sign Up</a></p>
+                <p><a href="#" class="close-login-screen">&copy 2017</a></p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+</div>
+  {{#extend 'js'}}
+   <script>
+     (function(){
+       var form = document.getElementsByTagName('form')[0];
+       // var submit = document.getElementById('asubmit')[0];
+       var link = document.getElementsByClassName('authBtn')[0];
+       link.onclick = function(){
+         form.submit();
+         return false
+       }
+     }())
+   </script>
+  {{/extend}}
