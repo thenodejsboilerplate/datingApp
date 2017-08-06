@@ -12,20 +12,31 @@ const fortuneLib = require('../libs/fortune.js'),
 module.exports = {
 
          home(req,res){
-            res.render('home/home', {
-                    title: 'home page',
-                    user: req.user ? req.user.processUser(req.user) : req.user,
-                    //postUser: req.user ? (req.user._id == user_id ? loginedUser : theuser) : theuser,
-                    // posts: posts,
-                    // page: page,
-                    // isFirstPage: (page - 1) == 0,
-                    // isLastPage: ((page - 1) * 10 + posts.length) == count,
-                    messages: {
-                        error: req.flash('error'),
-                        success: req.flash('success'),
-                        info: req.flash('info'),
-                    }, // get the user out of session and pass to template
-            });      
+           coHandle(function*(){
+                const user = req.user;
+                let isExpat = yield Expat.findOne({account: user._id}).exec();
+                // /console.log(JSON.stringify(isExpat))
+
+                let expat = isExpat ? isExpat.processExpat(isExpat) : null;
+
+
+                res.render('home/home', {
+                        title: 'home page',
+                        user: req.user ? req.user.processUser(req.user) : req.user,
+                        expat: expat,
+                        //postUser: req.user ? (req.user._id == user_id ? loginedUser : theuser) : theuser,
+                        // posts: posts,
+                        // page: page,
+                        // isFirstPage: (page - 1) == 0,
+                        // isLastPage: ((page - 1) * 10 + posts.length) == count,
+                        messages: {
+                            error: req.flash('error'),
+                            success: req.flash('success'),
+                            info: req.flash('info'),
+                        }, // get the user out of session and pass to template
+                });
+           })
+      
         },
 
         // about(req,res){

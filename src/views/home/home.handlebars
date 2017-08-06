@@ -6,10 +6,13 @@
   overflow-scrolling: touch;
   overflow: scroll;
 }
-a:hover{
 
+
+a, a:hover{
+    outline:none;
+   -moz-outline-style:none;
+   -webkit-tap-highlight-color:rgba(255,0,0,0)
 }
-/***禁止复制、选中文本***/
 
 Element {
   -webkit-user-select: none;
@@ -69,9 +72,10 @@ Element {
 
    {{#extend "js"}}
   <script>
+
     (function(){
         //var base = 'http://expat.trver.com';
-        var base = 'http://localhost:8080';
+        var base = 'http://192.168.0.104:8080';
       
         var myApp = new Framework7({
             pushState: true,
@@ -84,6 +88,14 @@ Element {
                 $$('.open-filter').on('click', function () {
                   myApp.popup('.popup-filter');
                 });
+
+                $$('.setting').on('click', function(){
+                  mainView.router.load({pageName: 'setting'});
+                })
+
+
+
+
                 var form = document.getElementsByClassName('filterForm')[0];
                 // var submit = document.getElementById('asubmit')[0];
                 var link = document.getElementsByClassName('authBtnHome')[0];
@@ -110,11 +122,13 @@ Element {
                           expats.forEach(function(v){
                             //alert('v'+ JSON.stringify(v))
 
-                              var post ='<li><a href="/expat?id=' + v._id  + '"'+' class="item-link item-content external"><div class="item-media"><img src=' + 'http://img1.imgtn.bdimg.com/it/u=4287063257,3622016934&fm=214&gp=0.jpg' + ' width="80"></div>' + '<div class="item-inner"><div class="item-title-row"><div class="item-title">'+ v.name +'</div><div class="item-after"><i class="f7-icons yen">money_yen_fill</i>' + (v.charge ? v.charge : 0) +'</div></div><div class="item-subtitle">'+ v.fromCountry + ', '+ v.fromState +' - '+ v.updated_at +'</div><div class="item-text">'+ v.experience +'</div></div></a></li>';
+                              var post ='<li><div class="item-content"><div class="item-media"><img src=' + 'http://img1.imgtn.bdimg.com/it/u=4287063257,3622016934&fm=214&gp=0.jpg' + ' width="80"></div>' + '<div class="item-inner"><div class="item-title-row"><div class="item-title">'+ v.name +'</div><div class="item-after"><i class="f7-icons yen">money_yen_fill</i>' + (v.charge ? v.charge : 0) +'</div></div><div class="item-subtitle">'+ v.fromCountry + ', '+ v.fromState +' - '+ v.updated_at +'</div>' + '<a href="/expat?id=' + v._id  + '"'+' class="item-link item-content external" style="padding-left: 0;">' + '<div class="item-text">'+ v.experience +'</div></a></div></li>';
 
                               document.querySelector('.resultContent ul.expatsList').innerHTML = document.querySelector('.resultContent ul.expatsList').innerHTML + post;
                               //document.querySelector('.resultContent ul.expatsList').insertAdjacentHTML('afterBegin',post);
                           })
+
+
 
                           if(expats.length < 5) {
                             $$('.infinite-scroll-preloader').remove();
@@ -202,13 +216,17 @@ Element {
 
       //  }());
         var mainView = myApp.addView('.view-main', {
+          domCache: true //enable inline pages
           
           // name: true,
           //dynamicNavbar: true
         })     
 
 
+
+
     }())
+
 
  
   </script>  

@@ -32,6 +32,9 @@
   i.yen{
     font-size: 0.8rem;
   }
+  .resultContent{
+    margin-top:1rem
+  }
 </style>
 
 {{/extend}}
@@ -41,13 +44,13 @@
               <div class="navbar">
                   <div class="navbar-inner">
                       <div class="left"></div>
-                      <div class="center">Uncle's English</div>
-                      <div class="right"><i class="f7-icons">add</i></div>
+                      <div class="center">Trver</div>
+                      <div class="right"><a href="#" class="open-panel"><i class="icon icon-bars"></i></a></div>
                   </div>
               </div>
                 <!-- Scrollable page content-->
-                <div class="page-content infinite-scroll" data-distance="100"><!--infinite-scroll-->
-                 
+                <div class="page-content infinite-scroll" data-distance="300"><!--infinite-scroll-->
+
                   <div class="row second-header">
                       <!-- Each "cell" has col-[widht in percents] class -->
                       <div class="col-70">
@@ -58,8 +61,8 @@
 
                  {{!--{{> post/postsLoop}}--}}
                     <div class="list-block media-list resultContent">
-                    <ul class="expatsList">
-                    </ul>
+                      <ul class="expatsList">
+                      </ul>
                     </div>
                     <!-- Preloader -->
                     <div class="infinite-scroll-preloader">
@@ -72,9 +75,16 @@
                 <!-- Additional "tabbar-scrollable" class -->
                  {{> general/tabbar}}
                 <!--end of navbar--> 
-
-
           </div>
+
+
+
+
+       <!--other page-->
+       {{> modals/setting}}
+    
+       <!--end-->
+
 
         {{> modals/login}}
 
@@ -85,6 +95,7 @@
 
 
       {{> modals/filter}}
+      
 
 
 
