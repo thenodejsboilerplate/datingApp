@@ -14,7 +14,11 @@ module.exports = {
          home(req,res){
            coHandle(function*(){
                 const user = req.user;
-                let isExpat = yield Expat.findOne({account: user._id}).exec();
+                let isExpat
+                if(user){
+                  isExpat = yield Expat.findOne({account: user._id}).exec();
+                }
+                
                 // /console.log(JSON.stringify(isExpat))
 
                 let expat = isExpat ? isExpat.processExpat(isExpat) : null;
