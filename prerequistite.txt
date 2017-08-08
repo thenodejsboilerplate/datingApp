@@ -1,0 +1,2 @@
+### 1 yum install ImageMagick
+### 2 dependency: mongodb redis

@@ -64,7 +64,7 @@ var config = {
   mail_opts: {
     host: 'smtp.ym.163.com',
     port: 994,
-    secure: true,
+    //secure: true,
     auth: {
       user: 'admin@trver.com',
       pass: 'frank548331198'

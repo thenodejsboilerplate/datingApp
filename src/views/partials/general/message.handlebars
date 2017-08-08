@@ -1,9 +1,27 @@
+    {{#extend 'css'}}
+    <style>
+     .alert{
+         text-align: center;
+         padding: 1rem 1rem
+     }       
+    </style>
+    {{/extend}}
+    
     {{#if messages }}
         {{#if messages.error }}
-        <div class="alert alert-danger"> {{ messages.error }} </div>
+        <div class="alert color-red"> {{ messages.error }} </div>
         {{else if messages.success}}
-        <div class="alert alert-success"> {{ messages.success }} </div>
+        <div class="alert color-green"> {{ messages.success }} </div>
         {{else if messages.info}}
-        <div class="alert alert-info"> {{ messages.info }} </div>        
+        <div class="alert color-green"> {{ messages.info }} </div>        
         {{/if}}
     {{/if}} 
+
+    <script>
+        (function(){
+            var alert = document.getElementsByClassName('alert')[0]
+            setTimeout(function(){
+                alert.style.display = 'none'
+            }, 5000)
+        }())
+    </script>
