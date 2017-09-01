@@ -182,7 +182,7 @@ module.exports = {
                         v.name ? helper.processImg(v, photoDir,5*1024*1024,files, req, res) : logger.debug('personal img not uploaded.skipping..');
                         })
                     }else{
-                        files.personal.name ? helper.processImg(file.personal, photoDir,5*1024*1024,files, req, res) : logger.debug('personal img not uploaded.skipping..');  
+                        files.personal.name ? helper.processImg(files.personal, photoDir,5*1024*1024,files, req, res) : logger.debug('personal img not uploaded.skipping..');  
                     }
 
                     files.id.name ? helper.processImg(files.id, photoDir,5*1024*1024,files, req, res) : logger.debug('id img not uploaded.skipping..')
