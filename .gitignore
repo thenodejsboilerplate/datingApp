@@ -5,3 +5,4 @@ heapdump*
 .DS_Store
 .sass-cache
 logs/*
+src/public/upload/*
