@@ -177,9 +177,14 @@ module.exports = {
                     logger.debug('into the formparse cb. files'+JSON.stringify(files)+ `fields ${fields}`);
 
                     // let names = [];
-                    files.personal.forEach(function(v,i,e){
-                      v.name ? helper.processImg(v, photoDir,5*1024*1024,files, req, res) : logger.debug('personal img not uploaded.skipping..');
-                    })
+                    if(Array.isArray(files.personal)){
+                        files.personal.forEach(function(v,i,e){
+                        v.name ? helper.processImg(v, photoDir,5*1024*1024,files, req, res) : logger.debug('personal img not uploaded.skipping..');
+                        })
+                    }else{
+                        files.personal.name ? helper.processImg(file.personal, photoDir,5*1024*1024,files, req, res) : logger.debug('personal img not uploaded.skipping..');  
+                    }
+
                     files.id.name ? helper.processImg(files.id, photoDir,5*1024*1024,files, req, res) : logger.debug('id img not uploaded.skipping..')
                     files.studentCard.name ? helper.processImg(files.studentCard, photoDir,5*1024*1024,files, req, res) : logger.debug('studentCard img not uploaded.skipping..')
                     // processImg(files.id, photoDir,5*1024*1024, req, res);
