@@ -150,12 +150,21 @@ module.exports = {
             }else if(photo === files.studentCard){
                 files.studentCard.name = photoName;
             }    
-
-            files.personal.forEach(function(vv){
-              if(vv.name === photo.name) {
-                  vv.name =  photoName;
+            
+            if(Array.isArray(files.personal)){
+              files.personal.forEach(function(vv){
+                if(vv.name === photo.name) {
+                    vv.name =  photoName;
+                }
+              })  
+            }else{
+            
+              if(files.personal.name === photo.name) {
+                  files.personal.name =  photoName;
               }
-            })                  
+ 
+            }
+                
 
 
 // else if(photo === files.personal){
