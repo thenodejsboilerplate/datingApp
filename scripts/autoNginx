@@ -1,0 +1,11 @@
+#!/bin/bash
+# clear: if you want to clear the above info in the command
+echo "copying the nignix folders and files..."
+mkdir /etc/nginx/sites-available
+mkdir /etc/nginx/sites-enabled
+cp -pr /app/datingApp/ngnix/* /etc/nginx
+# Create a symbolic link between sites-available and sites-enabled
+ln -s /etc/nginx/sites-available/trver.com.conf /etc/nginx/sites-enabled/trver.com.conf
+ln -s /etc/nginx/sites-available/trver.com8888.conf /etc/nginx/sites-enabled/trver.com8888.conf
+ln -s /etc/nginx/sites-available/redirect.conf /etc/nginx/sites-enabled/redirect.conf
+service nginx restart

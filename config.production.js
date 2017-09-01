@@ -64,11 +64,11 @@ var config = {
   mail_opts: {
     host: 'smtp.ym.163.com',
     port: 994,
-    secure: true,
+    //secure: true,
     auth: {
       user: 'admin@trver.com',
-      pass: 'trver123456'
-    },
+      pass: 'frank548331198'
+    }
   },
 
   // admin 可删除话题，编辑标签。把 user_login_name 换成你的登录名
