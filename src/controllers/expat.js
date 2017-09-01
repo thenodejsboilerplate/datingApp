@@ -215,10 +215,13 @@ module.exports = {
                             
                         });
                         
-                        if(files.personal){
+
+                        if(Array.isArray(files.personal)){
                             files.personal.forEach(function(v){
                                upload.personal.push(v.name)
                             })
+                        }else{
+                            upload.personal.push(files.personal.name)
                         }
 
                         logger.debug(`fields is: ${JSON.stringify(upload)}`);
