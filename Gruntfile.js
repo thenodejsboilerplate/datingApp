@@ -53,7 +53,7 @@ module.exports = function (grunt) {
       target: {
         files: [
           {
-            '<%= paths.release %>/css/app.min.css': ['<%= paths.css %>/*.css', '!<%= paths.css %>/app.css.map']
+            '<%= paths.release %>/css/app.min.css': ['<%= paths.css %>/framework7.ios.colors.min.css','<%= paths.css %>/framework7.ios.min.css','<%= paths.css %>/app.css', '!<%= paths.css %>/app.css.map']
           }
         ]
       }

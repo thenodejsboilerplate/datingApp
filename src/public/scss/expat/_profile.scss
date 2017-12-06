@@ -1,10 +1,13 @@
 .expatProfile{
     max-width:100%;
     .mainColor{
-        color: $mainColor;
+        color: $primaryColor;
     }
     p.boxText{
     @include ellipsis(100%);
+    span{
+        color: #e3e3e3;
+    }
     }
 
     .second-header{

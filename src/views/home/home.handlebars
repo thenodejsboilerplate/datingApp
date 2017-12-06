@@ -76,7 +76,7 @@ Element {
     (function(){
         //var base = 'http://expat.trver.com';
        // var base = 'http://67.209.183.78:8080';
-        var base = 'http://trver.com'
+        var base = 'http://localhost:8080'
         var myApp = new Framework7({
             pushState: true,
             init: true, //false, //Disable App's automatic initialization
@@ -122,7 +122,7 @@ Element {
                           expats.forEach(function(v){
                             //alert('v'+ JSON.stringify(v))
 
-                              var post ='<li><div class="item-content"><div class="item-media"><img src=' + 'http://img1.imgtn.bdimg.com/it/u=4287063257,3622016934&fm=214&gp=0.jpg' + ' width="80"></div>' + '<div class="item-inner"><div class="item-title-row"><div class="item-title">'+ v.name +'</div><div class="item-after"><i class="f7-icons yen">money_yen_fill</i>' + (v.charge ? v.charge : 0) +'</div></div><div class="item-subtitle">'+ v.fromCountry + ', '+ v.fromState +' - '+ v.updated_at +'</div>' + '<a href="/expat?id=' + v._id  + '"'+' class="item-link item-content external" style="padding-left: 0;">' + '<div class="item-text">'+ v.experience +'</div></a></div></li>';
+                              var post ='<li><div class="item-content"><div class="item-media"><img src=' + 'http://img1.imgtn.bdimg.com/it/u=4287063257,3622016934&fm=214&gp=0.jpg' + ' width="80"></div>' + '<div class="item-inner"><div class="item-title-row"><div class="item-title">'+ v.name +'</div><div class="item-after"><i class="f7-icons yen">money_yen_fill</i>' + (v.charge ? v.charge : 0) +'</div></div><div class="item-subtitle">'+ v.fromCountry + ', '+ v.fromState + '</div>' + '<a href="/expat?id=' + v._id  + '"'+' class="item-link item-content external" style="padding-left: 0;">' + '<div class="item-text">'+ v.experience +'</div></a></div></li>';
 
                               document.querySelector('.resultContent ul.expatsList').innerHTML = document.querySelector('.resultContent ul.expatsList').innerHTML + post;
                               //document.querySelector('.resultContent ul.expatsList').insertAdjacentHTML('afterBegin',post);

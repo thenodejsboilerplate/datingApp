@@ -178,7 +178,7 @@ module.exports = {
 
             const fullPath = photoDir + photoName;
 
-            function dealWithImg(w,h){
+            function dealWithImg(w=null,h=null){
                 im(path)
                 .resize(w,h,'!')
                 .autoOrient()
@@ -194,8 +194,9 @@ module.exports = {
                     }); 
                 });                                          
             }
-
-            dealWithImg(500,500);
+            
+            
+            dealWithImg(null,null);
   },
 
 
