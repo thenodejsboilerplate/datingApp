@@ -1,0 +1,44 @@
+{
+    "name"        : "EnglishTutor",  // 应用名称
+    "script"      : "./bin/www",  // 实际启动脚本
+    "cwd"         : "./",  // 当前工作路径
+    // "args"             : ["--toto=heya coco", "-d", "1"],
+    //"node_args"        : ["--harmony", " --max-stack-size=102400000"],
+    //"log_date_format"  : "YYYY-MM-DD HH:mm Z",
+    "watch": [  // 监控变化的目录，一旦变化，自动重启
+      "bin",
+      "src"
+    ],
+    "ignore_watch" : [  // 从监控目录中排除
+      "node_modules", 
+      "logs",
+      "src/public"
+    ],
+    //"instances"        : 2, //or 0 => 'max'
+    // "watch_options": {
+    //   "followSymlinks": false
+    // },
+
+    // "min_uptime"       : "200s", // 200 seconds, defaults to 1000
+    "max_restarts"     : 15, // defaults to 15
+    // "max_memory_restart": "1M", // 1 megabytes, e.g.: "2G", "10M", "
+    "error_file" : "./logs/app-err.log",  // 错误日志路径
+    "out_file"   : "./logs/app-out.log",  // 普通日志路径
+    "env": {
+        "NODE_ENV": "production",
+        "dbUsername": "frank25184",
+        "dbPassword": "548331198",
+        "MongoPort": 28017,
+        "PORT": 9000
+    },
+    "env_dev": {
+        "NODE_ENV": "development"
+    },
+    "env_test": {
+        "NODE_ENV": "test"
+    }
+  }
+
+
+
+  //pm2 start pm2.json --watch
