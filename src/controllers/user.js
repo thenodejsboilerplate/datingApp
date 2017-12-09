@@ -9,6 +9,7 @@ const flash        = require('connect-flash'),
     path = require('path'),
     fs = require('fs'),
 	utils = require('../libs/utility'),
+	seo = require('../config/seo'),
 	Expat = require('../models/Expat'),
 	User = require('../models/User'),
 	Complaint = require('../models/Complaint'),
@@ -25,7 +26,10 @@ module.exports = {
 			            	success: req.flash('success'),
 			            	info: req.flash('info'),
 			            }, 
-				    	user: req.user ? req.user.processUser(req.user) : req.user,
+						user: req.user ? req.user.processUser(req.user) : req.user,
+						title: seo.user.signup.title,
+						description: seo.user.signup.description,
+						keywords: seo.user.signup.keywords
 				    });
 		},
 
@@ -37,7 +41,10 @@ module.exports = {
 			            	success: req.flash('success'),
 			            	info: req.flash('info'),
 			            }, 
-				    	user: req.user ? req.user.processUser(req.user) : req.user,
+						user: req.user ? req.user.processUser(req.user) : req.user,
+						title: seo.user.login.title,
+						description: seo.user.login.description,
+						keywords: seo.user.login.keywords
 				    });
 		},
 

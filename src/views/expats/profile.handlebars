@@ -30,7 +30,12 @@
 }
 
 .mainColor{
-  color: #ef4450
+  color: #ef4450;
+
+}
+span.experience{
+  display: block;
+  margin-top: 1rem;
 }
 
 
@@ -41,7 +46,9 @@
   margin:0 2rem;
   margin-top: 2rem;
 }
-
+.helpText{
+   font-size:0.7rem;
+}
 </style>
 {{/extend}}
 <!-- That is all we have in about.html file -->
@@ -90,9 +97,9 @@
                         <div class="tagVerfy smallBox">
                           <div class="tag leftIcon"><i class="f7-icons mainColor">card_fill</i></div><!--
                           --><div class="rightContent">
-                            <p class="mainColor">Native</p>
+                            <p class="mainColor">Native/Secondary</p>
                             <p class="boxText">
-                              {{expat.nativeLanguage}}
+                              {{expat.nativeLanguage}}/{{expat.secondaryLanguage}}
                               {{!-- <br/>
                               <span>Secondary</span>: {{expat.secondaryLanguage}} --}}
 
@@ -102,9 +109,12 @@
                         --><div class="tagVerfy smallBox">
                           <div class="tag leftIcon"><i class="f7-icons mainColor">card_fill</i></div><!--
                           --><div class="rightContent">
-                            <p class="mainColor">Secondary</p>
+                            <p class="mainColor">
+                              Employment Type &nbsp 
+                              <a href="#" class="notification-default"><i class="f7-icons helpText">help</i></a>
+                            </p>
                             <p class="boxText">
-                              {{expat.secondaryLanguage}}
+                              {{expat.employmentType}}
                               {{!-- <br/>
                               <span>Secondary</span>: {{expat.secondaryLanguage}} --}}
                             </p>
@@ -195,7 +205,12 @@
 
                     <div class="row">
 
-                      <p class="smallBox" style="padding: 1rem;width:100%"><span class="mainColor">Experience/Others</span> <br/>{{expat.experience}}</p>
+                      <div class="smallBox" style="padding: 1rem;width:100%">
+                        <span class="mainColor">Experience</span> <br/>
+                        <span class="experience">{{{expat.experience}}}</span>
+                      </div>
+
+                      {{!-- <span class="hiddenExp" style="visibility: hidden;">{{expat.experience}}</span> --}}
 
                     </div>
 
@@ -348,7 +363,6 @@
 {{#extend 'js'}}
  <script>
     (function(){
-
        var form = document.getElementsByTagName('form')[0];
        // var submit = document.getElementById('asubmit')[0];
        var link = document.getElementsByClassName('authBtn')[0];
@@ -363,6 +377,14 @@
 
         // Slow speed
         var $$ = Dom7;
+
+
+        $$('.notification-default').on('click', function () {
+            myApp.addNotification({
+                title: 'Employment Type(工作时间)',
+                message: 'Short Term Temporary: < 6 months(少于6个月); </br> Long Term Temporary: 6 Months to 2 Years(6个月到2年)'
+            });
+        });
 
         $$('.open-contact').on('click', function () {
           myApp.popup('.popup-contact');

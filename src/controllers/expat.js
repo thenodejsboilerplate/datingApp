@@ -8,6 +8,8 @@ const coHandle = require('../common/coHandler');
 const config = require('../common/get-config');
 const helper = require('../libs/utility');
 const formidable = require('formidable');
+const seo = require('../config/seo');
+//const validator = require('validator');
 
 
 module.exports = {
@@ -35,6 +37,10 @@ module.exports = {
                         // keywords:seo.desktop.courses.book.keywords,
                         // description:seo.desktop.courses.book.description,  
                         expat: isExpat,
+						title: seo.form.toBeTutor.title,
+						description: seo.form.toBeTutor.description,
+						keywords: seo.form.toBeTutor.keywords,
+
                         messages: {
                             error: req.flash('error'),
                             success: req.flash('success'),
@@ -107,6 +113,8 @@ module.exports = {
               coinLeft =  user.coin;
             }
 
+            //expat.experience = validator.unescape(expat.experience);
+
             
             let coinNotEnough = false;
             if(charge > coinLeft) {
@@ -119,9 +127,11 @@ module.exports = {
                 expat: expat,
                 upload: upload,
                 coinNotEnough: coinNotEnough,
-                // title:seo.desktop.courses.book.title,
-                // keywords:seo.desktop.courses.book.keywords,
-                // description:seo.desktop.courses.book.description,  
+                title: expat.name + ' ' + seo.user.profile.title,
+                description: seo.user.profile.description,
+                keywords: seo.user.profile.keywords,
+
+
                 messages: {
                     error: req.flash('error'),
                     success: req.flash('success'),
@@ -143,9 +153,11 @@ module.exports = {
             res.render('form/expatImgUpload', {
                 user: user ? user.processUser(user) : user,
                 // expat: expat,
-                // title:seo.desktop.courses.book.title,
-                // keywords:seo.desktop.courses.book.keywords,
-                // description:seo.desktop.courses.book.description,  
+
+                title: seo.expat.uploadID.title,
+                description: seo.expat.uploadID.description,
+                keywords: seo.expat.uploadID.keywords,
+
                 messages: {
                     error: req.flash('error'),
                     success: req.flash('success'),

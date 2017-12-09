@@ -1,4 +1,5 @@
 {{#extend 'css'}}
+
  <style>
   .authBtn{
     display: inline-block;
@@ -10,13 +11,22 @@
     color: red;
   }
  </style>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
 {{/extend}}
 
     <div class="views"> 
     <div class="view view-profile">
       <div class="page">
         <div class="page-content login-screen-content">
-          <div class="login-screen-title">Expat Info</div>
+          {{!-- <div class="login-screen-title">Tutor</div> --}}
+
+          <div class="navbar">
+              <div class="navbar-inner">
+                  <div class="left"></div>
+                  <div class="center">To Be a Tutor</div>
+                  <div class="right"><a href="#" class="open-panel"><i class="icon icon-bars"></i></a></div>
+              </div>
+          </div> 
 
          {{#if expat}}
           <p class="tip"> You've posted at {{expat.created_at}}; <a href="/" class="external">Back</a></p>
@@ -110,7 +120,6 @@
                 </li>
 
                 <li>
-
                   <a href="#" class="item-link smart-select" data-open-in="popup">
                     <!-- select -->
                     <select  name="nativeLanguage">
@@ -155,25 +164,39 @@
                     </a>
                 </li>
 
-
+                <li>
+                    <a href="#" class="item-link smart-select" data-open-in="popup">
+                            <!-- "multiple" attribute for multiple select-->
+                            <select multiple name="employmentType">
+                              <option value="FullTime">Regular(Full-time)</option>
+                              <option value="PartTime" selected>Short Term Temporary(Less than 6 months)</option>
+                              <option value="PartTime" selected>Long Term Temporary(6 months to 2 years)</option>
+                            </select>
+                            <span calss="error"></span>
+                            <div class="item-content">
+                              <div class="item-inner">
+                                <div class="item-title">Employment Preferred</div>
+                              </div>
+                            </div>
+                    </a>
+                </li>
 
                 <li>
                     <a href="#" class="item-link smart-select" data-open-in="popup">
                             <!-- "multiple" attribute for multiple select-->
                             <select multiple name="hangout">
-                              <option value="Male">Male</option>
-                              <option value="Female" selected>Female</option>
-                              <option value="Speaking Chinese">Speaking Chinese</option>
-                              <option value="Speaking English">Speaking English</option>
-                              <option value="Open-minded">Open-minded</option>
+                              <option value="Basic Speaking">Basic Speaking</option>
+                              <option value="Speaking Chinese">Fluent Chinese</option>
+                              <option value="Speaking English">Fluent English</option>
                               <option value="Same City">Same City</option>
                               <option value="Any City">Any City</option>
-                              <option value="Anyone">Anyone</option>
+                              <option value="Motivated">Motivated</option>
+                              <option value="Open-minded">Open-minded</option>
                             </select>
                             <span calss="error"></span>
                             <div class="item-content">
                               <div class="item-inner">
-                                <div class="item-title">Will Hang out With</div>
+                                <div class="item-title">Student Required</div>
                               </div>
                             </div>
                     </a>
@@ -184,9 +207,12 @@
 
                 <li class="item-content">
                   <div class="item-inner">
-                    <div class="item-title label">Experience <br >&& Yourself</div>
+                    <div class="item-title label" id="experience">Experience <br >&& Yourself</div>
                     <div class="item-input">
-                        <textarea required name="experience" placeholder="Education && teaching experience etc"></textarea>
+                        {{!-- <textarea required name="experience" placeholder="Teaching Year/Grade && Teaching method && Promise"></textarea> --}}
+                        
+                        <textarea name='experience1' id="myExperience" placeholder="Teaching Experience && Promise..."></textarea>
+                        <textarea name='experience' id="fakeExp" style="visibility: hidden;"></textarea>
                     </div>
                   </div>
                 </li>
@@ -195,9 +221,9 @@
 
                 <li class="item-content">
                   <div class="item-inner">
-                    <div class="item-title label">Meetup Fee</div>
+                    <div class="item-title label">Charge ￥</div>
                     <div class="item-input">
-                      <input type="number" name="charge" placeholder="0-400">
+                      <input type="number" name="charge" placeholder="￥0-800/Hour">
                     </div>
                   </div>
                 </li>
@@ -212,6 +238,8 @@
               <div class="list-block-label">
                 {{!--<p>Already have an account? <a class="external" href="/user/login">Log In</a></p>--}}
                 <p><a href="#" class="close-login-screen">&copy 2017</a></p>
+                <p><a href="/" class="close-login-screen external">Back</a></p>
+
               </div>
             </div>
           </form>
@@ -221,16 +249,83 @@
 
 </div>
   {{#extend 'js'}}
+
+
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
    <script>
      (function(){
+    // Most options demonstrate the non-default behavior
+    var simplemde = new SimpleMDE({
 
-var myApp = new Framework7();
+      element: document.getElementById("myExperience"),
+
+      lineWrapping: true,
+      parsingConfig: {
+        allowAtxHeaderWithoutSpace: true,
+        strikethrough: false,
+        underscoresBreakWords: true,
+      },
+      //splaceholder: "Teaching Experience && Promise...",
+      previewRender: function(plainText) {
+        return customMarkdownParser(plainText); // Returns HTML from a custom parser
+      },
+
+      promptURLs: true,
+      renderingConfig: {
+        singleLineBreaks: false,
+        codeSyntaxHighlighting: true,
+      },
+      shortcuts: {
+        drawTable: "Cmd-Alt-T"
+      },
+      showIcons: ["code", "table"],
+      spellChecker: false,
+      status: false,
+      status: ["autosave", "lines", "words", "cursor"], // Optional usage
+      status: ["autosave", "lines", "words", "cursor", {
+        className: "keystrokes",
+        defaultValue: function(el) {
+          this.keystrokes = 0;
+          el.innerHTML = "0 Keystrokes";
+        },
+        onUpdate: function(el) {
+          el.innerHTML = ++this.keystrokes + " Keystrokes";
+        }
+      }], // Another optional usage, with a custom status bar item that counts keystrokes
+      styleSelectedText: false,
+      tabSize: 4,
+      toolbar: false,
+      toolbarTips: false,
+    });
+
+
+    var myApp = new Framework7({
+            pushState: true,
+            init: true, //false, //Disable App's automatic initialization
+            onPageInit: function (app, page) {
+
+
+
+
+            }
+
+    })
+
 
        var form = document.getElementsByTagName('form')[0];
        // var submit = document.getElementById('asubmit')[0];
        var link = document.getElementsByClassName('authBtn')[0];
        link.onclick = function(){
-         form.submit();
+        var testPlain = simplemde.value(), 
+        testMarkdown = simplemde.markdown(testPlain);
+        document.getElementById('fakeExp').value = testMarkdown;
+
+        form.submit();
+
+
+        
+
          return false
        }
 

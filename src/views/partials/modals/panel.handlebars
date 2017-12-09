@@ -3,16 +3,17 @@
     <div class="content-block">
       <p>
           {{#if user}}
-            Welcome, {{user.username}}
+            Welcome, {{user.username}}  <br/>
+            <a href="/user/logout" class="external">Logout</a>
          {{else}}
-            <a href="/user/login"><i class="f7-icons">login</i></a>
+            Hi,Stranger &nbsp <a href="/user/login" class="external" style="font-size:0.8rem;">Login</a>
           {{/if}}
        </p>
       <!-- Click on link with "close-panel" class will close panel -->
       {{!--<p><a href="#" class="close-panel">Close me</a></p>--}}
       <p><a href="#setting" class="close-panel">Settings</a></p>
       <!-- Click on link with "open-panel" and data-panel="right" attribute will open Right panel -->
-      <p><a href="#">More..</a></p>
+      {{!-- <p><a href="#">More..</a></p> --}}
 
       
     </div>

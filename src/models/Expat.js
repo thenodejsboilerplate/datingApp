@@ -1,5 +1,6 @@
 //./models/User.js
 "use strict";
+
 const mongoose = require('mongoose'),
       User = require('../models/User'),
       moment = require('moment'),
@@ -53,6 +54,7 @@ var expatSchema = new Schema({
      nativeLanguage: {type: String,required: true},
      secondaryLanguage: {type: String,required: true},
      hangout: {type: String, required: true},
+     employmentType: {type: String, required: true,default: 'Part-Time'},
     // coin: {type: Number, default: 0},
 
      inService: { type: String, default: false}
@@ -104,7 +106,9 @@ var expatSchema = new Schema({
 //     // });
 // });
 
-
+function removeTAG(str){
+    return str.replace(/<[^>]+>/g, "");
+}
 
 expatSchema.methods.processExpat = user=>{
     return {
@@ -114,6 +118,7 @@ expatSchema.methods.processExpat = user=>{
         phone: user.phone,
         wechat: user.wechat,
         experience: user.experience,
+        experienceEscaped: removeTAG(user.experience),
         choiceState: user.choiceState,
         choiceCity: user.choiceDetail,
         fromCountry: user.fromCountry,
@@ -122,6 +127,7 @@ expatSchema.methods.processExpat = user=>{
         nativeLanguage: user.nativeLanguage,
         secondaryLanguage: user.secondaryLanguage,
         hangout: user.hangout,
+        employmentType: user.employmentType,
        // coin: user.coin,
         //age: user.age,
 

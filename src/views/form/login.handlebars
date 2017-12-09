@@ -48,7 +48,17 @@
     <div class="view">
       <div class="page">
         <div class="page-content login-screen-content">
-          <div class="login-screen-title">Log In</div>
+          {{!-- <div class="login-screen-title">Log In</div> --}}
+
+          <div class="navbar">
+              <div class="navbar-inner">
+                  <div class="left"></div>
+                  <div class="center">Log In</div>
+                  <div class="right"><a href="#" class="open-panel"><i class="icon icon-bars"></i></a></div>
+              </div>
+          </div> 
+
+          
           <form method="POST" action="/user/postLogin">
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <div class="list-block">
@@ -80,6 +90,7 @@
               <div class="list-block-label">
                 <p>No account? <a class="external" href="/user/signup">Sign Up</a></p>
                 <p><a href="#" class="close-login-screen">&copy 2017</a></p>
+                <p><a href="/" class="close-login-screen external">Back</a></p>
               </div>
             </div>
           </form>

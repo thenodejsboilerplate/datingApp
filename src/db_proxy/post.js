@@ -225,11 +225,16 @@ module.exports = {
                                 page: page,
                                 isFirstPage: (page - 1) == 0,
                                 isLastPage: ((page - 1) * 10 + posts.length) == count,                        
+                                title: seo.user.profile.title,
+                                description: seo.user.profile.description,
+                                keywords: seo.user.profile.keywords,
+
                                 messages: {
                                     error: req.flash('error'),
                                     success: req.flash('success'),
                                     info: req.flash('info'),
-                                }, // get the user out of session and pass to template
+                                }, // get the user out of session and pass to templat
+
                             });                                
                     });
                })

@@ -7,6 +7,7 @@ const fortuneLib = require('../libs/fortune.js'),
       userProxy = require('../db_proxy/user'),
       coHandle = require('../common/coHandler'),
       expatMethod = require('../db_proxy/expat'),
+      seo = require('../config/seo'),
       logger = require('../libs/logger');
 
 module.exports = {
@@ -22,10 +23,11 @@ module.exports = {
                 // /console.log(JSON.stringify(isExpat))
 
                 let expat = isExpat ? isExpat.processExpat(isExpat) : null;
+                
 
 
                 res.render('home/home', {
-                        title: 'home page',
+                       /// title: 'home page',
                         user: req.user ? req.user.processUser(req.user) : req.user,
                         expat: expat,
                         //postUser: req.user ? (req.user._id == user_id ? loginedUser : theuser) : theuser,
@@ -33,6 +35,11 @@ module.exports = {
                         // page: page,
                         // isFirstPage: (page - 1) == 0,
                         // isLastPage: ((page - 1) * 10 + posts.length) == count,
+						title: seo.home.title,
+						description: seo.home.description,
+						keywords: seo.home.keywords,
+
+
                         messages: {
                             error: req.flash('error'),
                             success: req.flash('success'),

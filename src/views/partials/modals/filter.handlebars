@@ -54,7 +54,7 @@
 
                           <li class="item-content">
                             <div class="item-inner">
-                              <div class="item-title label">Come from</div>
+                              <div class="item-title label">From</div>
                               <div class="item-input">
                                 <select id="fromCountry" name="fromCountry" class="form-control" style="width:49%;display:inline-block;"></select>    
                                 {{!--<select name="fromState" id="fromState" class="form-control" style="width:49%;display:inline-block;"></select> --}}
@@ -64,7 +64,7 @@
 
                           <li class="item-content">
                             <div class="item-inner">
-                              <div class="item-title label">Now in</div>
+                              <div class="item-title label">Now</div>
                               <div class="item-input">
                               
                                 <select id="choiceState"  name="choiceState" class="form-control" style="width:49%;display:inline-block;"></select> 
@@ -135,7 +135,7 @@
    <script>
      (function(){
        var form = document.getElementsByClassName('filterForm')[0];
-       console.log('from '+ JSON.stringify(form))
+      // console.log('from '+ JSON.stringify(form))
        // var submit = document.getElementById('asubmit')[0];
        var link = document.getElementsByClassName('authBtnHome')[0];
        link.onclick = function(e){

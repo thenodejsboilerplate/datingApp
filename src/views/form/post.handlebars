@@ -14,7 +14,17 @@
     <div class="view">
       <div class="page">
         <div class="page-content login-screen-content">
-          <div class="login-screen-title"></div>
+          {{!-- <div class="login-screen-title"></div> --}}
+
+          <div class="navbar">
+              <div class="navbar-inner">
+                  <div class="left"></div>
+                  <div class="center">POST</div>
+                  <div class="right"><a href="#" class="open-panel"><i class="icon icon-bars"></i></a></div>
+              </div>
+          </div> 
+
+          
           <form method="POST" action="/user/postSignup">
             <input type="hidden" name="_csrf" value="{{csrfToken}}">
             <div class="list-block">
